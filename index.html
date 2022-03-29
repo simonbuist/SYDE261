@@ -50,7 +50,7 @@ tw-passage {
 			current.push(all[current.length]);
 		};
 		Harlowe.storage.save('current', current);
-		return current.join('');
+		return current.join('').concat('█');
 	});
 	
 }());</script><tw-passagedata pid="1" name="Start Page" tags="" position="400,100" size="100,100">(align:&quot;=&gt;&lt;=&quot;)+(box:&quot;X&quot;)[\
@@ -125,10 +125,9 @@ https://twinery.org/&quot;)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
 (if: (history:)&#39;s last is &quot;Intro&quot;)[(t_app: &quot;You&#39;re standing in your office. &quot;)]\
-(t_app: &quot;You notice your slightly disheveled desk in the center of the room. It&#39;s hard to miss, seriously, you should get to cleaning that mess. Your computer is on top of the desk.\n&quot;)\
+(t_app: &quot;You notice your slightly disheveled desk in the center of the room. It&#39;s hard to miss, seriously, you should get to cleaning that mess. Your computer is on top of the desk.&quot;)\
 \
 (live:20)[(print:(t_out:))]
-
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 [[Turn on the computer-&gt;Computer]]
@@ -137,11 +136,9 @@ https://twinery.org/&quot;)\
 ]</tw-passagedata><tw-passagedata pid="5" name="4 Hall" tags="" position="600,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
-(t_app: &quot;You enter the 4th floor hall. There are four doors and a staircase heading down. \n&quot;)\
+(t_app: &quot;You enter the 4th floor hall. There are four doors and a staircase heading down.&quot;)\
 \
 (live:20)[(print:(t_out:))]
-
-
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
@@ -154,25 +151,18 @@ https://twinery.org/&quot;)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
 (t_app: &quot;You enter the equipment room. It&#39;s &quot;)\
-(if: (not ($inventory contains &quot;hatchet&quot;)) or (not ($inventory contains &quot;hazmat suit&quot;)))[(t_app: &quot;mostly empty now, but there&#39;s some stuff on the ground.\n&quot;)](else:)[(t_app: &quot;empty.\n&quot;)]\
+(if: (not ($inventory contains &quot;hatchet&quot;)) or (not ($inventory contains &quot;hazmat suit&quot;)))[(t_app: &quot;mostly empty now, but there&#39;s some stuff on the ground.&quot;)](else:)[(t_app: &quot;empty.&quot;)]\
 (live:20)[(print:(t_out:))]
 
-(event: when $genvar1 is 1)[(if: $genvar2 is 1)[You put on the hazmat suit. You feel a little more safe now. (Insert information about PPE for nuclear workers.)
-](else:)[You never know when a hatchet could come in handy!
-]]\
-(event: when $genvar1 is 2)[(if: $genvar2 is 1)[
-](else:)[You never know when a hatchet could come in handy!
-]]\
-
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
-(if: not ($inventory contains &quot;hatchet&quot;))[(link: &quot;Pick up hatchet\n&quot;)[(set: $inventory to it+(a: &quot;hatchet&quot;))(t_app: &quot;You never know when a hatchet could come in handy!\n&quot;)]]\
-(if: $bool_hazmat is false)[(link: &quot;Put on hazmat suit\n&quot;)[(set: $bool_hazmat to true)(set: $inventory to it+(a: &quot;hazmat suit&quot;))(t_app: &quot;You put on the hazmat suit. You feel a little more safe now. (Insert information about PPE for nuclear workers.)\n&quot;)]]\
+(if: not ($inventory contains &quot;hatchet&quot;))[(link: &quot;Pick up hatchet\n&quot;)[(set: $inventory to it+(a: &quot;hatchet&quot;))(t_app: &quot;\nYou never know when a hatchet could come in handy!&quot;)]]\
+(if: $bool_hazmat is false)[(link: &quot;Put on hazmat suit\n&quot;)[(set: $bool_hazmat to true)(set: $inventory to it+(a: &quot;hazmat suit&quot;))(t_app: &quot;\nYou put on the hazmat suit. You feel a little more safe now. (Insert information about PPE for nuclear workers.)&quot;)]]\
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 [[Go to the hall-&gt;4 Hall]]
 ]</tw-passagedata><tw-passagedata pid="7" name="4W Lookout Room" tags="" position="500,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
-(t_app: &quot;The sun from shines through the window and looking outside reveals beautiful Kincardine, Ontario. There is a vending machine by the entrance. \n&quot;)\
+(t_app: &quot;The sun from shines through the window and looking outside reveals beautiful Kincardine, Ontario. There is a vending machine by the entrance.&quot;)\
 \
 &lt;p&gt;&lt;pre&gt;                                                    @%(*,,,,,,****/.                                
                                                     &amp;(**,,,,,,,**,.                                 
@@ -213,14 +203,14 @@ https://twinery.org/&quot;)\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
-(link: &quot;Buy a snack&quot;)[(t_app: &quot;You have no cash on you!\n&quot;)]
+(link: &quot;Buy a snack&quot;)[(t_app: &quot;\nYou have no cash on you!&quot;)]
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 [[Go to the hall-&gt;4 Hall]]
 ]</tw-passagedata><tw-passagedata pid="8" name="4S Locked Door" tags="" position="600,500" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
-(if: $inv_item is &quot;key&quot;)[(t_app: &quot;You enter the locked room.\n&quot;)]\
-(else:)[(t_app: &quot;The door is locked. You cannot enter.\n&quot;)]\
+(if: $inv_item is &quot;key&quot;)[(t_app: &quot;You enter the locked room.&quot;)]\
+(else:)[(t_app: &quot;The door is locked. You cannot enter.&quot;)]\
 \
 (live:20)[(print:(t_out:))]
 
@@ -228,7 +218,11 @@ https://twinery.org/&quot;)\
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 [[Go to the hall-&gt;4 Hall]]
-]</tw-passagedata><tw-passagedata pid="9" name="Inventory" tags="" position="200,500" size="100,100">(set: $inv_item to &quot;null&quot;)What item do you want to use?
+]</tw-passagedata><tw-passagedata pid="9" name="Inventory" tags="" position="200,500" size="100,100">(t_clr:)\
+(set: $inv_item to &quot;null&quot;)\
+(t_app: &quot;What item do you want to use?&quot;)\
+\
+(live:20)[(print:(t_out:))]
 (if: $inventory&#39;s length is not 0)[\
 (for: each _inv_item, ...$inventory)[\
 	(link: _inv_item)[\
@@ -236,30 +230,29 @@ https://twinery.org/&quot;)\
 		(if: _inv_item is &quot;code&quot;)[(goto:&quot;Code&quot;)]\
 		(else:)[(set: $inv_item to _inv_item)(goto: (history:)&#39;s last)]\
 	]
-]](else:)[You have no items.
-]
+]](else:)[(t_app: &quot;\nYou have no items.&quot;)]
 (link: &quot;Cancel&quot;)[(goto: (history:)&#39;s last)]</tw-passagedata><tw-passagedata pid="10" name="Template" tags="" position="200,300" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
-(t_app: &quot;Description \n&quot;)\
+(t_app: &quot;Description&quot;)\
 \
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 ]</tw-passagedata><tw-passagedata pid="11" name="Computer" tags="" position="700,200" size="100,100">(if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-(t_clr:)(t_app: &quot;You boot up your computer. It takes a bit, but it&#39;s working just fine.\n&quot;)\
+(t_clr:)(t_app: &quot;You boot up your computer. It takes a bit, but it&#39;s working just fine.&quot;)\
 \
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
-(if: $bool_announcement is false)[(link: &quot;Make evacuation announcement\n&quot;)[(set: $bool_announcement to true)(set: $score to it + 1)(t_app: &quot;You turn on the PA and announce that all non-essential personnel should evacuate the building. With that done, you breathe a sigh of relief, knowing people will get out safely.\n&quot;)]]\
-(link: &quot;Check Employee Logs\n&quot;)[(t_app: &quot;Insert fun facts about the Ontario nuclear industry.\n&quot;)]\
+(if: $bool_announcement is false)[(link: &quot;Make evacuation announcement\n&quot;)[(set: $bool_announcement to true)(set: $score to it + 1)(t_app: &quot;\nYou turn on the PA and announce that all non-essential personnel should evacuate the building. With that done, you breathe a sigh of relief, knowing people will get out safely.&quot;)]]\
+(link: &quot;Check Employee Logs\n&quot;)[(t_app: &quot;\nInsert fun facts about the Ontario nuclear industry.&quot;)]\
 [[Power off the computer-&gt;4N Office]]
 ]</tw-passagedata><tw-passagedata pid="12" name="3 Hall" tags="" position="1000,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
-(t_app: &quot;You enter the 3rd floor hall. There are four doors and staircases heading up and down. \n&quot;)\
+(t_app: &quot;You enter the 3rd floor hall. There are four doors and staircases heading up and down.&quot;)\
 \
 (live:20)[(print:(t_out:))]
 
@@ -274,7 +267,7 @@ https://twinery.org/&quot;)\
 ]</tw-passagedata><tw-passagedata pid="13" name="4N Monitor Room" tags="" position="1000,300" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
-(t_app: &quot;Various gauges are displaying different information and you can’t help but notice a faint sound of electrical humming. \n&quot;)\
+(t_app: &quot;Various gauges are displaying different information and you can’t help but notice a faint sound of electrical humming.&quot;)\
 \
 (live:20)[(print:(t_out:))]
 
@@ -282,42 +275,42 @@ https://twinery.org/&quot;)\
 ]]\
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
-(link: &quot;Check the gauges&quot;)[(if: not ($inventory contains &quot;note with tasks&quot;))[(t_app: &quot;You take a glance at the readings and write down a list of things to do. \n&quot;)(set: $inventory to it + (a: &quot;note with tasks&quot;))](else:)[(t_app: &quot;You&#39;ve already checked these. Look in the inventory for your list of tasks.\n&quot;)]]
+(link: &quot;Check the gauges&quot;)[(if: not ($inventory contains &quot;note with tasks&quot;))[(t_app: &quot;\nYou take a glance at the readings and write down a list of things to do.&quot;)(set: $inventory to it + (a: &quot;note with tasks&quot;))](else:)[(t_app: &quot;\nYou&#39;ve already checked these. Look in the inventory for your list of tasks.&quot;)]]
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 [[Go to the hall-&gt;3 Hall]]
 ]</tw-passagedata><tw-passagedata pid="14" name="4E Control Room" tags="" position="1100,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
-(t_app: &quot;The control room is empty and everything looks operational. There are a variety of buttons, switches, and keypads. \n&quot;)\
-(if: $inventory contains &quot;note with tasks&quot;)[(if: $bool_control_rods is false)[(t_app: &quot;The button to engage the control rods is flashing red, with a keypad below it.\n&quot;)](else:)[(t_app: &quot;The button to engage the control rods is a steady green.&quot;)]]
+(t_app: &quot;The control room is empty and everything looks operational. There are a variety of buttons, switches, and keypads.&quot;)\
+(if: $inventory contains &quot;note with tasks&quot;)[(if: $bool_control_rods is false)[(t_app: &quot; The button to engage the control rods is flashing red, with a keypad below it.&quot;)](else:)[(t_app: &quot; The button to engage the control rods is a steady green.&quot;)]]
 \
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
-(if: ($inventory contains &quot;note with tasks&quot;) and ($bool_control_rods is false))[(link: &quot;Press the button&quot;)[(if: $inventory contains &quot;code&quot;)[(set: $bool_control_rods to true)(set: $score to it + 1)(t_app: &quot;You type in the code you found and press the button. You hear the reactor begin to quiet down a bit. \n&quot;)](else:)[(t_app: &quot;You press the button, but nothing happens. It seems like you need to type in a code first.\n&quot;)]]]
+(if: ($inventory contains &quot;note with tasks&quot;) and ($bool_control_rods is false))[(link: &quot;Press the button&quot;)[(if: $inventory contains &quot;code&quot;)[(set: $bool_control_rods to true)(set: $score to it + 1)(t_app: &quot;\nYou type in the code you found and press the button. You hear the reactor begin to quiet down a bit.&quot;)](else:)[(t_app: &quot;\nYou press the button, but nothing happens. It seems like you need to type in a code first.&quot;)]]]
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 [[Go to the hall-&gt;3 Hall]]
 ]</tw-passagedata><tw-passagedata pid="15" name="4S Break Room" tags="" position="1000,500" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
-(t_app: &quot;The smell of leftover abandoned food fills the air. \n&quot;)\
-(if: not ($inventory contains &quot;code&quot;))[(t_app: &quot;You notice a small note on the table in front of you with a code written on it.\n&quot;)]\
+(t_app: &quot;The smell of leftover abandoned food fills the air.&quot;)\
+(if: not ($inventory contains &quot;code&quot;))[(t_app: &quot; You notice a small note on the table in front of you with a code written on it.&quot;)]\
 \
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
-(if: not ($inventory contains &quot;code&quot;))[(link: &quot;Pick up note\n&quot;)[(set: $inventory to it+(a: &quot;code&quot;))(t_app: &quot;You pick up the note and read the code, \&quot;040202\&quot;. What could this be for?\n&quot;)]]\
+(if: not ($inventory contains &quot;code&quot;))[(link: &quot;Pick up note\n&quot;)[(set: $inventory to it+(a: &quot;code&quot;))(t_app: &quot;\nYou pick up the note and read the code, \&quot;040202\&quot;. What could this be for?&quot;)]]\
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 [[Go to the hall-&gt;3 Hall]]
 ]</tw-passagedata><tw-passagedata pid="16" name="4W Bathroom" tags="" position="900,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
-(t_app: &quot;It&#39;s a bathroom. There&#39;s not much to notice. \n&quot;)\
+(t_app: &quot;It&#39;s a bathroom. There&#39;s not much to notice.&quot;)\
 \
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
-(link_repeat: &quot;Use the bathroom&quot;)[(t_app: &quot;You use the bathoom, clean yourself up and feel refreshed.\n&quot;)]
+(link_repeat: &quot;Use the bathroom&quot;)[(t_app: &quot;\nYou use the bathoom, clean yourself up and feel refreshed.&quot;)]
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 [[Go to the hall-&gt;3 Hall]]
 ]</tw-passagedata><tw-passagedata pid="17" name="2 Hall" tags="" position="1400,400" size="100,100">(t_clr:)\
@@ -334,7 +327,12 @@ https://twinery.org/&quot;)\
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (link: &quot;Close&quot;)[(goto: (history:)&#39;s 2ndlast)]
-]</tw-passagedata><tw-passagedata pid="20" name="Code" tags="" position="300,600" size="100,100">On the note is written &quot;040202&quot;.
+]</tw-passagedata><tw-passagedata pid="20" name="Code" tags="" position="300,600" size="100,100">(t_clr:)\
+(if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
+\
+(t_app: &quot;On the note is written \&quot;040202\&quot;.&quot;)\
+\
+(live:20)[(print:(t_out:))]
 
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
