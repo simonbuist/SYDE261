@@ -106,7 +106,7 @@ Role: Name
 Created with Twine 2.0
 https://twinery.org/
 
-Game version 0.2.8&quot;)\
+Game version 0.3.0&quot;)\
 \
 (live:20)[(print:(t_out:))]
 
@@ -129,7 +129,7 @@ Game version 0.2.8&quot;)\
 (set: $bool_toonie_spotted to false)\
 (set: $bool_save_technician to true)\
 (set: $bool_technician_saved to false)\
-(set: $bool_seen_sam to false)\
+(set: $bool_seen_kapi to false)\
 (set: $bool_phone_call to false)\
 \
 (t_clr:)(t_app: &quot;This game is a text-based RPG. You control your character by selecting various actions. At any point, you can click \&quot;Inventory\&quot; to use an item. Throughout the game, various actions will increase your score. If you ever feel stuck, try revisiting earlier locations and using new items you&#39;ve found. Good luck!
@@ -375,7 +375,7 @@ However, that crash sounded terrible and the cry for help sounded even worse. It
 (t_app: &quot;It&#39;s a note with tasks on it - you&#39;d better get these done to avoid a disaster
 &quot;)\
 (t_app: &quot;\n&gt; Make an evacuation announcement&quot;)(if: $bool_announcement is true)[(t_app: &quot; DONE!&quot;)]\
-(t_app: &quot;\n&gt; Close the coolant valve&quot;)(if: ($bool_technician_saved is true) and ($bool_save_technician is false))[(t_app: &quot; FAILED (you decided it was more important to save Sam)&quot;)](else-if: $bool_valve_closed is true)[(t_app: &quot; DONE!&quot;)]\
+(t_app: &quot;\n&gt; Close the coolant valve&quot;)(if: ($bool_technician_saved is true) and ($bool_save_technician is false))[(t_app: &quot; FAILED (you decided it was more important to save Kapi)&quot;)](else-if: $bool_valve_closed is true)[(t_app: &quot; DONE!&quot;)]\
 (t_app: &quot;\n&gt; Insert the control rods&quot;)(if: $bool_control_rods is true)[(t_app: &quot; DONE!&quot;)]\
 (t_app: &quot;\n&gt; Replace the coolant pump&quot;)(if: $bool_pump_replaced is true)[(t_app: &quot; DONE!&quot;)]\
 (t_app: &quot;\n&gt; Shut off the outflow&quot;)(if: $bool_outflow_closed is true)[(t_app: &quot; DONE!&quot;)]\
@@ -413,9 +413,9 @@ However, that crash sounded terrible and the cry for help sounded even worse. It
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
 (if: $inv_item is &quot;keycard&quot;)[\
-(if: not ($inventory contains &quot;tool bag&quot;))[(t_app: &quot;You swipe Sam&#39;s keycard and the door unlocks.
+(if: not ($inventory contains &quot;tool bag&quot;))[(t_app: &quot;You swipe Kapi&#39;s keycard and the door unlocks.
 The dim lighting of the closest reveals a tool bag laying on the shelf in front of you.&quot;)]\
-(else:)[(t_app: &quot;You swipe Sam&#39;s keycard and the door unlocks.
+(else:)[(t_app: &quot;You swipe Kapi&#39;s keycard and the door unlocks.
 The dim lighting of the closet reveals only the empty shelves.&quot;)]\
 ]\
 (else:)[(t_app: &quot;The door to the janitor&#39;s closet has a card scanner beside it. You cannot enter.&quot;)]\
@@ -450,24 +450,24 @@ Really bad.&quot;)]\
 \
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
-(if: $bool_save_technician is true)[(t_app: &quot;As you enter, you see Sam, one of the technicians, with the water level rising around you.
+(if: $bool_save_technician is true)[(t_app: &quot;As you enter, you see Kapi, one of the technicians, with the water level rising around you.
 
 \&quot;HELP ME! A SHELF FELL ON ME AND I&#39;M TRAPPED\&quot;
 
-Immediately after, the water covers his head.&quot;)(set: $bool_seen_sam to true)]\
-(else-if: $bool_seen_sam is false)[(t_app: &quot;As you enter, you see a fallen shelf with a body trapped under it, mostly submerged.
+Immediately after, the water covers his head.&quot;)(set: $bool_seen_kapi to true)]\
+(else-if: $bool_seen_kapi is false)[(t_app: &quot;As you enter, you see a fallen shelf with a body trapped under it, mostly submerged.
 
-It&#39;s Sam, one of the technicians. You didn&#39;t get to him quick enough.
+It&#39;s Kapi, one of the technicians. You didn&#39;t get to him quick enough.
 
-Beside him, you see his keycard floating.&quot;)(set: $bool_seen_sam to true)]\
+Beside him, you see his keycard floating.&quot;)(set: $bool_seen_kapi to true)]\
 (else-if: $bool_technician_saved is true)[(t_app: &quot;The water has receded. The room is a mess of toppled shelves.&quot;)]\
-(else:)[(t_app: &quot;The water has receded, revealing Sam trapped under a shelf, lying still. It hurts to look.&quot;)]\
+(else:)[(t_app: &quot;The water has receded, revealing Kapi trapped under a shelf, lying still. It hurts to look.&quot;)]\
 \
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
-(if: $bool_save_technician is true)[(link: &quot;SAVE SAM!\n&quot;)[(set: $bool_save_technician to false)(set: $bool_technician_saved to true)(t_app: &quot;\nYou manage to pry the shelf off of Sam.
+(if: $bool_save_technician is true)[(link: &quot;SAVE KAPI!\n&quot;)[(set: $bool_save_technician to false)(set: $bool_technician_saved to true)(t_app: &quot;\nYou manage to pry the shelf off of Kapi.
 
 He coughs for a minute, then gets to his feet.
 
@@ -477,8 +477,8 @@ You tell him to get out of here.
 
 He hands you his keycard. \&quot;You might need this.\&quot;
 
-Sam leaves.&quot;)(set: $inventory to it + (a: &quot;keycard&quot;))]]\
-(else-if: ($bool_technician_saved is false) and (not($inventory contains &quot;keycard&quot;)))[(link: &quot;Grab the floating keycard\n&quot;)[(set: $inventory to it + (a: &quot;keycard&quot;))(t_app: &quot;\nYou grab the keycard, trying not to look at Sam.&quot;)]]\
+Kapi leaves.&quot;)(set: $inventory to it + (a: &quot;keycard&quot;))]]\
+(else-if: ($bool_technician_saved is false) and (not($inventory contains &quot;keycard&quot;)))[(link: &quot;Grab the floating keycard\n&quot;)[(set: $inventory to it + (a: &quot;keycard&quot;))(t_app: &quot;\nYou grab the keycard, trying not to look at Kapi.&quot;)]]\
 [[Go to the hall-&gt;2 Hall]]
 ]
 
@@ -616,11 +616,11 @@ Clearly you don&#39;t want that happening.&quot;)]]]\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
 (if: $inv_item is &quot;keycard&quot;)[\
-(if: (not ($inventory contains &quot;replacement pump&quot;)) and ($inventory contains &quot;note with tasks&quot;))[(t_app: &quot;You swipe Sam&#39;s keycard and the door unlocks.
+(if: (not ($inventory contains &quot;replacement pump&quot;)) and ($inventory contains &quot;note with tasks&quot;))[(t_app: &quot;You swipe Kapi&#39;s keycard and the door unlocks.
 The shop is eerie.
 It&#39;s never this quiet.
 You quickly head to the shelf to find the spare pump.&quot;)]\
-(else:)[(t_app: &quot;You swipe Sam&#39;s keycard and the door unlocks.
+(else:)[(t_app: &quot;You swipe Kapi&#39;s keycard and the door unlocks.
 The shop is eerie.
 It&#39;s never this quiet. You don&#39;t like it.&quot;)]\
 ]\
