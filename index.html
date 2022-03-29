@@ -104,7 +104,9 @@ Role: Name #ID
 Role: Name
 
 Created with Twine 2.0
-https://twinery.org/&quot;)\
+https://twinery.org/
+
+Game version 0.2.7&quot;)\
 \
 (live:20)[(print:(t_out:))]
 
@@ -118,6 +120,9 @@ https://twinery.org/&quot;)\
 (set: $bool_clean_desk to false)\
 (set: $bool_story to false)\
 (set: $bool_safety_funds to false)\
+(set: $bool_key_on_ground to false)\
+(set: $bool_empty_toilet_paper to false)\
+(set: $bool_toonie_spotted to false)\
 \
 (t_clr:)(t_app: &quot;This game is a text-based RPG. You control your character by selecting various actions. At any point, you can click \&quot;Inventory\&quot; to use an item. Throughout the game, various actions will increase your score. If you ever feel stuck, try revisiting earlier locations and using new items you&#39;ve found. Good luck!
 
@@ -156,7 +161,7 @@ You notice your desk is a mess. It&#39;s hard to miss. Seriously, you should get
 ]</tw-passagedata><tw-passagedata pid="5" name="4 Hall" tags="" position="600,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
-(if: $bool_story is false)[(set: $delay to 13000)(set: $bool_story to true)(t_app:&quot;Out of nowhere, you hear a familiar noise coming from afar.
+(if: $bool_story is false)[(set: $delay to 130)(set: $bool_story to true)(t_app:&quot;Out of nowhere, you hear a familiar noise coming from afar.
 
  You walk towards the door and open it slowly.
  
@@ -190,17 +195,19 @@ You have to save the nuclear plant now or a massacre will occur.&quot;)](else:)[
 \
 (t_app: &quot;You enter the equipment room. It&#39;s &quot;)\
 (if: (not ($inventory contains &quot;hatchet&quot;)) or (not ($inventory contains &quot;hazmat suit&quot;)))[(t_app: &quot;mostly empty now, but there&#39;s some stuff on the ground.&quot;)](else:)[(t_app: &quot;empty.&quot;)]\
+(if: $bool_empty_toilet_paper is true and not ($inventory contains &quot;toilet paper&quot;))[(t_app: &quot; You spot the toilet paper on a shelf.&quot;)]
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (if: not ($inventory contains &quot;hatchet&quot;))[(link: &quot;Pick up hatchet\n&quot;)[(set: $inventory to it+(a: &quot;hatchet&quot;))(t_app: &quot;\nYou never know when a hatchet could come in handy!&quot;)]]\
 (if: $bool_hazmat is false)[(link: &quot;Put on hazmat suit\n&quot;)[(set: $bool_hazmat to true)(set: $inventory to it+(a: &quot;hazmat suit&quot;))(t_app: &quot;\nYou put on the hazmat suit. You feel a little more safe now. (Insert information about PPE for nuclear workers.)&quot;)]]\
+(if: $bool_empty_toilet_paper is true and not ($inventory contains &quot;toilet paper&quot;))[(link: &quot;Grab the roll of toilet paper\n&quot;)[(set: $inventory to it+(a: &quot;toilet paper&quot;))(t_app: &quot;\nTime to go refill the bathroom - even in a catastrophe, good manners can&#39;t wait!&quot;)]]\
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 [[Go to the hall-&gt;4 Hall]]
 ]</tw-passagedata><tw-passagedata pid="7" name="4W Lookout Room" tags="" position="500,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
-(t_app: &quot;The sun from shines through the window and looking outside reveals beautiful Kincardine, Ontario. There is a vending machine by the entrance.&quot;)\
+(t_app: &quot;The glistening moonlight fades as raindrops start to race down the window. Looking outside reveals the night at its darkest in Kincardine. There is a vending machine by the entrance.&quot;)\
 \
 &lt;p&gt;&lt;pre&gt;                                                    @%(*,,,,,,****/.                                
                                                     &amp;(**,,,,,,,**,.                                 
@@ -241,7 +248,11 @@ You have to save the nuclear plant now or a massacre will occur.&quot;)](else:)[
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
-(link: &quot;Buy a snack&quot;)[(t_app: &quot;\nYou have no cash on you!&quot;)]
+(link: &quot;Buy a snack&quot;)\
+[(if: $inventory contains &quot;toonie&quot;)[(set: $inventory to it - (a: &quot;toonie&quot;))(set: $inventory to it + (a: &quot;red bull&quot;))(set: $bool_key_on_ground to true)(t_app: &quot;\nYou put the toonie in the vending machine and buy your favourite drink - a nice cold red bull.
+As you take it out, you fumble it and it rolls under the machine. While leaning down to grab it, you notice a key under the vending machine. How odd!&quot;)]\
+(else:)[(t_app: &quot;\nYou have no cash on you!&quot;)]]
+(event: when $bool_key_on_ground is true)[(link: &quot;Pick up the key\n&quot;)[(set: $bool_key_on_ground to false)(set: $inventory to it + (a: &quot;key&quot;))(t_app: &quot;\nYou reach under the machine and grab the key. It&#39;s a little sticky. Ew.&quot;)]]\
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 [[Go to the hall-&gt;4 Hall]]
 ]</tw-passagedata><tw-passagedata pid="8" name="4S Locked Door" tags="" position="600,500" size="100,100">(t_clr:)\
@@ -251,7 +262,6 @@ You have to save the nuclear plant now or a massacre will occur.&quot;)](else:)[
 (else:)[(t_app: &quot;The door is locked. You cannot enter.&quot;)]\
 \
 (live:20)[(print:(t_out:))]
-
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
@@ -267,6 +277,7 @@ You have to save the nuclear plant now or a massacre will occur.&quot;)](else:)[
 		(if: _inv_item is &quot;note with tasks&quot;)[(goto:&quot;Note with Tasks&quot;)]\
 		(if: _inv_item is &quot;code&quot;)[(goto:&quot;Code&quot;)]\
 		(if: _inv_item is &quot;family picture&quot;)[(goto:&quot;Family Picture&quot;)]\
+		(if: _inv_item is &quot;red bull&quot;)[(goto:&quot;Red Bull&quot;)]\
 		(else:)[(set: $inv_item to _inv_item)(goto: (history:)&#39;s last)]\
 	]
 ]](else:)[(t_app: &quot;\nYou have no items.&quot;)]
@@ -333,7 +344,7 @@ Wow, that’s expensive. At least employees are well paid.&quot;)]\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
-(if: ($inventory contains &quot;note with tasks&quot;) and ($bool_control_rods is false))[(link: &quot;Press the button&quot;)[(if: $inventory contains &quot;code&quot;)[(set: $bool_control_rods to true)(set: $score to it + 1)(t_app: &quot;\nYou type in the code you found and press the button. You hear the reactor begin to quiet down a bit.&quot;)](else:)[(t_app: &quot;\nYou press the button, but nothing happens. It seems like you need to type in a code first.&quot;)]]]
+(if: ($inventory contains &quot;note with tasks&quot;) and ($bool_control_rods is false))[(link: &quot;Press the button&quot;)[(if: (history:)&#39;s last is &quot;Code&quot;)[(set: $bool_control_rods to true)(set: $score to it + 1)(t_app: &quot;\nYou type in the code you found and press the button. You hear the reactor begin to quiet down a bit. Inserting the control rods has slowed down the reaction.&quot;)](else:)[(t_app: &quot;\nYou press the button, but nothing happens. It seems like you need to type in a code first.&quot;)]]]
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 [[Go to the hall-&gt;3 Hall]]
 ]</tw-passagedata><tw-passagedata pid="15" name="4S Break Room" tags="" position="1000,500" size="100,100">(t_clr:)\
@@ -349,17 +360,27 @@ Wow, that’s expensive. At least employees are well paid.&quot;)]\
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 [[Go to the hall-&gt;3 Hall]]
 ]</tw-passagedata><tw-passagedata pid="16" name="4W Bathroom" tags="" position="900,400" size="100,100">(t_clr:)\
+(set: $num_washroom to (random: 5, 10))\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-\
-(t_app: &quot;It&#39;s a bathroom. There&#39;s not much to notice.&quot;)\
+
+(if: $inv_item is &quot;toilet paper&quot;)[(t_app: &quot;You replace the toilet paper and throw the empty roll in the garbage. As you drop it in, you notice a shiny toonie in the trash.&quot;)(set: $bool_toonie_spotted to true)(set: $inventory to it - (a: &quot;toilet paper&quot;))(set: $bool_empty_toilet_paper to false)]\
+(else:)[(t_app: &quot;It&#39;s a bathroom. There&#39;s not much to notice.&quot;)]\
 \
 (live:20)[(print:(t_out:))]
+(live:20)[(print:$num_washroom)]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
-(link_repeat: &quot;Use the bathroom&quot;)[(t_app: &quot;\nYou use the bathoom, clean yourself up and feel refreshed.&quot;)]
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
+(event: when $bool_toonie_spotted is true)[(link: &quot;Grab the toonie\n&quot;)[(set: $inventory to it + (a: &quot;toonie&quot;))(set: $bool_toonie_spotted to false)(t_app: &quot;\nFinders keepers!&quot;)]]\
+(link_repeat: &quot;Use the bathroom&quot;)[(if: $bool_empty_toilet_paper is false)[(t_app: &quot;\nYou use the bathroom, clean yourself up, and feel refreshed.&quot;)(set: $num_washroom to it - 1)](else:)[(t_app: &quot;\nYou can&#39;t use the bathroom, there&#39;s no toilet paper!&quot;)]]
+(event: when $num_washroom is 0)[\
+(if: (not ($inventory contains &quot;toonie&quot;)) and (not ($inventory contains &quot;key&quot;)) and (not ($inventory contains &quot;red bull&quot;)))[\
+(set: $bool_empty_toilet_paper to true)(t_app: &quot; As you finish up, you realized you&#39;ve used the last of the toilet paper. You really ought to get a new roll.&quot;)\
+]]\
 [[Go to the hall-&gt;3 Hall]]
-]</tw-passagedata><tw-passagedata pid="17" name="2 Hall" tags="" position="1400,400" size="100,100">(t_clr:)\
+]
+
+</tw-passagedata><tw-passagedata pid="17" name="2 Hall" tags="" position="1400,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
 (t_app: &quot;You enter the 2nd floor hall. There are four doors and staircases heading up and down. \n&quot;)\
@@ -374,24 +395,29 @@ Wow, that’s expensive. At least employees are well paid.&quot;)]\
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (link: &quot;Close&quot;)[(goto: (history:)&#39;s 2ndlast)]
 ]</tw-passagedata><tw-passagedata pid="20" name="Code" tags="" position="300,600" size="100,100">(t_clr:)\
-(if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
 (t_app: &quot;On the note is written \&quot;040202\&quot;.&quot;)\
 \
 (live:20)[(print:(t_out:))]
 
-
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (link: &quot;Close&quot;)[(goto: (history:)&#39;s 2ndlast)]
 ]</tw-passagedata><tw-passagedata pid="21" name="Family Picture" tags="" position="400,600" size="100,100">(t_clr:)\
-(if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
 (t_app: &quot;You take a look at the picture of your family and smile.&quot;)\
 \
 (live:20)[(print:(t_out:))]
 
+(align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
+(link: &quot;Close&quot;)[(goto: (history:)&#39;s 2ndlast)]
+]</tw-passagedata><tw-passagedata pid="22" name="Red Bull" tags="" position="200,700" size="100,100">(t_clr:)\
+\
+(t_app: &quot;A shiny can of red bull. It was cold, but it&#39;s warming up. Better drink it quick!&quot;)\
+\
+(live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
+(link: &quot;Drink it&quot;)[(set: $inventory to it - (a: &quot;red bull&quot;))(t_app: &quot;\nRefreshing!&quot;)(set: $score to it + 1)]
 (link: &quot;Close&quot;)[(goto: (history:)&#39;s 2ndlast)]
 ]</tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">"use strict";var _slicedToArray=function(){return function(e,t){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return function(e,t){var n=[],r=!0,a=!1,i=void 0;try{for(var o,s=e[Symbol.iterator]();!(r=(o=s.next()).done)&&(n.push(o.value),!t||n.length!==t);r=!0);}catch(e){a=!0,i=e}finally{try{!r&&s.return&&s.return()}finally{if(a)throw i}}return n}(e,t);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e};function _defineProperty(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function _toConsumableArray(e){if(Array.isArray(e)){for(var t=0,n=Array(e.length);t<e.length;t++)n[t]=e[t];return n}return Array.from(e)}!function(){
