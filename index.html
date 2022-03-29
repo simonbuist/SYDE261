@@ -94,6 +94,7 @@ tw-passage {
 ]
 
 &lt;/p&gt;</tw-passagedata><tw-passagedata pid="2" name="Credits" tags="" position="200,100" size="100,100">(text-colour:#1df326)[=\
+(set: $test to &quot;mid text&quot;)
 (t_clr:)(t_app: &quot;#Credits
 SYDE 261
 Professor Howcroft
@@ -108,46 +109,83 @@ https://twinery.org/&quot;)\
 (live:20)[(print:(t_out:))]
 
 
-[[Back-&gt;Start Page]]</tw-passagedata><tw-passagedata pid="3" name="Intro" tags="scores" position="400,300" size="100,100">(set: $inventory to (a:))(set: $inv_item to &quot;null&quot;)(set: $genvar1 to 0)(set: $genvar2 to 0)\
+[[Back-&gt;Start Page]]</tw-passagedata><tw-passagedata pid="3" name="Intro" tags="scores" position="400,300" size="100,100">(set: $inventory to (a:))(set: $inv_item to &quot;null&quot;)\
 \
 (set: $score to 0)\
 (set: $bool_announcement to false)\
 (set: $bool_hazmat to false)\
 (set: $bool_control_rods to false)\
+(set: $bool_clean_desk to false)\
+(set: $bool_story to false)\
+(set: $bool_safety_funds to false)\
+\
+(t_clr:)(t_app: &quot;This game is a text-based RPG. You control your character by selecting various actions. At any point, you can click \&quot;Inventory\&quot; to use an item. Throughout the game, various actions will increase your score. If you ever feel stuck, try revisiting earlier locations and using new items you&#39;ve found. Good luck!
 
-(t_clr:)(t_app: &quot;Introductory text\n\nAt any point, you can click \&quot;Inventory\&quot; to use an item!&quot;)\
+You are the head engineer of operations at the Bruce Power Generating Station in Kincardine, Ontario. It&#39;s a fairly modern nuclear power plant, and the days aren&#39;t too exciting, but the job pays well.
+You&#39;re in your top floor office on a cold, rainy weekend night finishing up some paperwork. There is barely anyone in the building.
+
+Type in your name.&quot;)\
 
 (live:20)[(print:(t_out:))]
+(after: 15500)[(dropdown: 2bind $title,&quot;Dr.&quot;,&quot;Mr.&quot;,&quot;Ms.&quot;)(input-box:2bind $name,&quot;XXX=======&quot;,1,&quot;Banner&quot;)]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
-[[Begin!-&gt;4N Office]]
+(link: &quot;Begin!&quot;)[(if: $title is 0)[(set: $title to &quot;Dr.&quot;)](if: $name is 0)[(set: $name to &quot;Banner&quot;)](goto: &quot;4N Office&quot;)]
 ]</tw-passagedata><tw-passagedata pid="4" name="4N Office" tags="" position="600,300" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
-(if: (history:)&#39;s last is &quot;Intro&quot;)[(t_app: &quot;You&#39;re standing in your office. &quot;)]\
-(t_app: &quot;You notice your slightly disheveled desk in the center of the room. It&#39;s hard to miss, seriously, you should get to cleaning that mess. Your computer is on top of the desk.&quot;)\
+(if: (history:)&#39;s last is &quot;Intro&quot;)[(if: $name is 0)[(set: $name to &quot;Banner&quot;)](t_app: &quot;You&#39;re sitting at your desk. 
+From the hall, you hear your secretary, Robin, say \&quot;&quot; + $title + &quot; &quot; + $name + &quot;, I’m going home now. I finished up the paperwork for shipping out this month\&#39;s nuclear waste. Please try to get home early today, you’ve been working yourself too much lately and I’m worried you’ll get sick. Anyways, have a good night!\&quot;&quot;)]\
+(else:)[(if: $bool_clean_desk is false)[(t_app: &quot;You notice your slightly disheveled desk in the center of the room. It&#39;s hard to miss, seriously, you should get to cleaning that mess.&quot;)](else:)[(t_app: &quot;You notice your nice, clean desk. It&#39;s always so much easier to think when your desk is clean!&quot;)]]\
+(t_app: &quot;\nYour computer is on top of the desk.&quot;)\
+(if: $bool_clean_desk is false)[(t_app: &quot;
+You notice your desk is a mess. It&#39;s hard to miss. Seriously, you should get to cleaning it up.&quot;)]
 \
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 [[Turn on the computer-&gt;Computer]]
+(if: $bool_clean_desk is false)[\
+(link: &quot;Clean your desk\n&quot;)[\
+(set: $bool_clean_desk to true)(t_app: &quot;\nIt takes a few minutes to clean up, but once you&#39;re done you notice a photo frame flipped over.&quot;)\
+(link: &quot;Pick up photo frame\n&quot;)[\
+(t_app: &quot;\nAh, it’s your loving family. Your son, Atreus, is waiting for you to get home to celebrate winning his soccer tournament. Your wife and son haven’t seen you in a while because you’ve been working so much. Get your job done and go back home and be there for your family!&quot;)\
+(set: $inventory to it + (a: &quot;family picture&quot;))]]]\
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 [[Go to the hall-&gt;4 Hall]]
 ]</tw-passagedata><tw-passagedata pid="5" name="4 Hall" tags="" position="600,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
-(t_app: &quot;You enter the 4th floor hall. There are four doors and a staircase heading down.&quot;)\
+(if: $bool_story is false)[(set: $delay to 13000)(set: $bool_story to true)(t_app:&quot;Out of nowhere, you hear a familiar noise coming from afar.
+
+ You walk towards the door and open it slowly.
+ 
+The sound of the alarm grows louder.
+
+You’re in shock.
+
+Your worst nightmare is unfolding upon you. You see red lights flashing and the sound getting sharper.
+
+Fear creeps into your veins as you realize what you are witnessing.
+
+It’s a nuclear meltdown.
+
+\&quot;This is not real,\&quot; you tell yourself as you try to grasp your breath.
+
+But this is the reality you’re facing right now.
+
+You have to save the nuclear plant now or a massacre will occur.&quot;)](else:)[(set: $delay to 1)(t_app: &quot;You enter the 4th floor hall. There are four doors and a staircase heading down.&quot;)]\
 \
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
-(link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
+(after: $delay)[(link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 [[Go north to the office-&gt;4N Office]]
 [[Go east to the equipment room-&gt;4E Equipment Room]]
 [[Go south to the locked door-&gt;4S Locked Door]]
 [[Go west to the lookout-&gt;4W Lookout Room]]
 [[Go downstairs-&gt;3 Hall]]
-]</tw-passagedata><tw-passagedata pid="6" name="4E Equipment Room" tags="" position="700,400" size="100,100">(t_clr:)\
+]]</tw-passagedata><tw-passagedata pid="6" name="4E Equipment Room" tags="" position="700,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
 (t_app: &quot;You enter the equipment room. It&#39;s &quot;)\
@@ -228,6 +266,7 @@ https://twinery.org/&quot;)\
 	(link: _inv_item)[\
 		(if: _inv_item is &quot;note with tasks&quot;)[(goto:&quot;Note with Tasks&quot;)]\
 		(if: _inv_item is &quot;code&quot;)[(goto:&quot;Code&quot;)]\
+		(if: _inv_item is &quot;family picture&quot;)[(goto:&quot;Family Picture&quot;)]\
 		(else:)[(set: $inv_item to _inv_item)(goto: (history:)&#39;s last)]\
 	]
 ]](else:)[(t_app: &quot;\nYou have no items.&quot;)]
@@ -246,8 +285,15 @@ https://twinery.org/&quot;)\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
-(if: $bool_announcement is false)[(link: &quot;Make evacuation announcement\n&quot;)[(set: $bool_announcement to true)(set: $score to it + 1)(t_app: &quot;\nYou turn on the PA and announce that all non-essential personnel should evacuate the building. With that done, you breathe a sigh of relief, knowing people will get out safely.&quot;)]]\
-(link: &quot;Check Employee Logs\n&quot;)[(t_app: &quot;\nInsert fun facts about the Ontario nuclear industry.&quot;)]\
+(if: $bool_announcement is false and $bool_story is true)[(link: &quot;Make evacuation announcement\n&quot;)[(set: $bool_announcement to true)(set: $score to it + 1)(t_app: &quot;\nYou turn on the PA and announce that all non-essential personnel should evacuate the building. With that done, you breathe a sigh of relief, knowing people will get out safely.&quot;)]]\
+(link: &quot;Check nuclear plant statistics\n&quot;)[(t_app: &quot;\nLocation: Kincardine, Ontario
+Reactor Type: CANDU
+Initial construction cost: $7.8B
+Refurbishment cost: $13B
+Employees: 4,200 direct jobs
+Employee salary: $160,000 per year
+Wow, that’s expensive. At least employees are well paid.&quot;)]\
+(if: $bool_safety_funds is false)[(link: &quot;Allocate funds to workers&#39; safety equipment&quot;)[(t_app: &quot;You approve the spending on protective equipment for workers. Although it&#39;s not cheap, without proper equipment workers can be exposed to long-term radiation, increasing their risk of cancer.&quot;)(set: $score to it + 1)]
 [[Power off the computer-&gt;4N Office]]
 ]</tw-passagedata><tw-passagedata pid="12" name="3 Hall" tags="" position="1000,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
@@ -331,6 +377,16 @@ https://twinery.org/&quot;)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 \
 (t_app: &quot;On the note is written \&quot;040202\&quot;.&quot;)\
+\
+(live:20)[(print:(t_out:))]
+
+
+(align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
+(link: &quot;Close&quot;)[(goto: (history:)&#39;s 2ndlast)]
+]</tw-passagedata><tw-passagedata pid="21" name="Family Picture" tags="" position="400,600" size="100,100">(t_clr:)\
+(if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
+\
+(t_app: &quot;You take a look at the picture of your family and smile.&quot;)\
 \
 (live:20)[(print:(t_out:))]
 
