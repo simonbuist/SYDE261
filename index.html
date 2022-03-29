@@ -54,8 +54,7 @@ tw-passage {
 	});
 	
 }());</script><tw-passagedata pid="1" name="Start Page" tags="" position="400,100" size="100,100">(align:&quot;=&gt;&lt;=&quot;)+(box:&quot;X&quot;)[\
-&lt;p&gt;&lt;pre&gt;
-     ____                             ____  __            __ 
+&lt;p&gt;&lt;pre&gt;     ____                             ____  __            __ 
     / __ \____ _      _____  _____   / __ \/ /___ _____  / /_
    / /_/ / __ \ | /| / / _ \/ ___/  / /_/ / / __  / __ \/ __/
   / ____/ /_/ / |/ |/ /  __/ /     / ____/ / /_/ / / / / /_  
@@ -106,20 +105,18 @@ Role: Name
 Created with Twine 2.0
 https://twinery.org/
 
-Game version 0.3.0&quot;)\
+Game version 0.3.1&quot;)\
 \
 (live:20)[(print:(t_out:))]
 
 
 [[Back-&gt;Start Page]]</tw-passagedata><tw-passagedata pid="3" name="Intro" tags="scores" position="400,300" size="100,100">(set: $inventory to (a:))(set: $inv_item to &quot;null&quot;)\
-\
 (set: $score to 0)\
 (set: $bool_announcement to false)\
 (set: $bool_valve_closed to false)\
 (set: $bool_control_rods to false)\
 (set: $bool_pump_replaced to false)\
 (set: $bool_outflow_closed to false)\
-\
 (set: $bool_hazmat to false)\
 (set: $bool_clean_desk to false)\
 (set: $bool_story to false)\
@@ -131,33 +128,30 @@ Game version 0.3.0&quot;)\
 (set: $bool_technician_saved to false)\
 (set: $bool_seen_kapi to false)\
 (set: $bool_phone_call to false)\
-\
 (t_clr:)(t_app: &quot;This game is a text-based RPG. You control your character by selecting various actions. At any point, you can click \&quot;Inventory\&quot; to use an item. Throughout the game, various actions will increase your score. If you ever feel stuck, try revisiting earlier locations and using new items you&#39;ve found. Good luck!
 
 You are the head engineer of operations at the Bruce Power Generating Station in Kincardine, Ontario. It&#39;s a fairly modern nuclear power plant, and the days aren&#39;t too exciting, but the job pays well.
 You&#39;re in your top floor office on a cold, rainy weekend night finishing up some paperwork. There is barely anyone in the building.
 
 Type in your name.&quot;)\
-\
 (live: 20)[(print:(t_out:))]
 
-(after: 15500)[(dropdown: 2bind $title,&quot;Dr.&quot;,&quot;Mr.&quot;,&quot;Ms.&quot;)(input-box:2bind $name,&quot;XXX=======&quot;,1,&quot;Bruce Banner&quot;)]
+(after: 17750)[(dropdown: 2bind $title,&quot;Dr.&quot;,&quot;Mr.&quot;,&quot;Ms.&quot;)(input-box:2bind $name,&quot;XXX=======&quot;,1,&quot;Bruce Banner&quot;)]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (link: &quot;Begin!&quot;)[(if: $title is 0)[(set: $title to &quot;Dr.&quot;)](if: $name is 0)[(set: $name to &quot;Bruce Banner&quot;)](goto: &quot;4N Office&quot;)]
 ]</tw-passagedata><tw-passagedata pid="4" name="4N Office" tags="" position="600,300" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-\
-(if: (history:)&#39;s last is &quot;Intro&quot;)[(if: $name is 0)[(set: $name to &quot;Banner&quot;)](t_app: &quot;You&#39;re sitting at your desk. 
-From the hall, you hear your secretary, Robin, say \&quot;&quot; + $title + &quot; &quot; + $name + &quot;, I’m going home now. I finished up the paperwork for shipping out this month\&#39;s nuclear waste. Please try to get home early today, you’ve been working yourself too much lately and I’m worried you’ll get sick. Anyways, have a good night!\&quot;&quot;)]\
-(else:)[(if: $bool_clean_desk is false)[(t_app: &quot;You notice your slightly disheveled desk in the center of the room. It&#39;s hard to miss, seriously, you should get to cleaning that mess.&quot;)](else:)[(t_app: &quot;You notice your nice, clean desk. It&#39;s always so much easier to think when your desk is clean!&quot;)]]\
+(if: (history:)&#39;s last is &quot;Intro&quot;)[(if: $name is 0)[(set: $name to &quot;Banner&quot;)](set: $delay to 13000)(t_app: &quot;You&#39;re sitting at your desk. 
+From the hall, you hear your secretary, Robin, say \&quot;&quot; + $title + &quot; &quot;)(if: $name contains &quot; &quot;)[(t_app: (split: &quot; &quot;, $name)&#39;s 1st)]\
+(else:)[(t_app: $name)](t_app: &quot;, I’m going home now. I finished up the paperwork for shipping out this month\&#39;s nuclear waste. Please try to get home early today, you’ve been working yourself too much lately and I’m worried you’ll get sick. Anyways, have a good night!\&quot;&quot;)]\
+(else:)[(set:$delay to 1)(if: $bool_clean_desk is false)[(t_app: &quot;You notice your slightly disheveled desk in the center of the room. It&#39;s hard to miss, seriously, you should get to cleaning that mess.&quot;)](else:)[(t_app: &quot;You notice your nice, clean desk. It&#39;s always so much easier to think when your desk is clean!&quot;)]]\
 (t_app: &quot;\nYour computer is on top of the desk.&quot;)\
 (if: $bool_clean_desk is false)[(t_app: &quot;
 You notice your desk is a mess. It&#39;s hard to miss. Seriously, you should get to cleaning it up.&quot;)]\
-\
 (live:20)[(print:(t_out:))]
 
-(align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
+(after: $delay)[(align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 [[Turn on the computer-&gt;Computer]]
 (if: $bool_clean_desk is false)[\
@@ -167,10 +161,9 @@ You notice your desk is a mess. It&#39;s hard to miss. Seriously, you should get
 (t_app: &quot;\nAh, it’s your loving family. Your son, Atreus, is waiting for you to get home to celebrate winning his soccer tournament. Your wife and son haven’t seen you in a while because you’ve been working so much. Get your job done and go back home and be there for your family!&quot;)\
 (set: $inventory to it + (a: &quot;family picture&quot;))]]]\
 [[Go to the hall-&gt;4 Hall]]
-]</tw-passagedata><tw-passagedata pid="5" name="4 Hall" tags="" position="600,400" size="100,100">(t_clr:)\
+]]</tw-passagedata><tw-passagedata pid="5" name="4 Hall" tags="" position="600,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-\
-(if: $bool_story is false)[(set: $delay to 130)(set: $bool_story to true)(t_app:&quot;Out of nowhere, you hear a familiar noise coming from afar.
+(if: $bool_story is false)[(set: $delay to 15000)(set: $bool_story to true)(t_app:&quot;Out of nowhere, you hear a familiar noise coming from afar.
 
  You walk towards the door and open it slowly.
  
@@ -189,7 +182,6 @@ It’s a nuclear meltdown.
 But this is the reality you’re facing right now.
 
 You have to save the nuclear plant now or a massacre will occur.&quot;)](else:)[(set: $delay to 1)(t_app: &quot;You enter the 4th floor hall. There are four doors and a staircase heading down.&quot;)]\
-\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
@@ -201,7 +193,6 @@ You have to save the nuclear plant now or a massacre will occur.&quot;)](else:)[
 [[Go downstairs-&gt;3 Hall]]
 ]]</tw-passagedata><tw-passagedata pid="6" name="4E Equipment Room" tags="" position="700,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-\
 (t_app: &quot;You enter the equipment room. It&#39;s &quot;)\
 (if: (not ($inventory contains &quot;hatchet&quot;)) or (not ($inventory contains &quot;hazmat suit&quot;)))[(t_app: &quot;mostly empty now, but there&#39;s some stuff on the ground.&quot;)](else:)[(t_app: &quot;empty.&quot;)]\
 (if: $bool_empty_toilet_paper is true and not ($inventory contains &quot;toilet paper&quot;))[(t_app: &quot; You spot the toilet paper on a shelf.&quot;)]\
@@ -215,9 +206,7 @@ You have to save the nuclear plant now or a massacre will occur.&quot;)](else:)[
 [[Go to the hall-&gt;4 Hall]]
 ]</tw-passagedata><tw-passagedata pid="7" name="4W Lookout Room" tags="" position="500,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-\
 (t_app: &quot;The glistening moonlight fades as raindrops start to race down the window. Looking outside reveals the night at its darkest in Kincardine. There is a vending machine by the entrance.&quot;)\
-\
 &lt;p&gt;&lt;pre&gt;                                                    @%(*,,,,,,****/.                                
                                                     &amp;(**,,,,,,,**,.                                 
                                                    @%*,,,,,,,,,,,,                                  
@@ -266,10 +255,8 @@ As you take it out, you fumble it and it rolls under the machine. While leaning 
 [[Go to the hall-&gt;4 Hall]]
 ]</tw-passagedata><tw-passagedata pid="8" name="4S Locked Door" tags="" position="600,500" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-\
 (if: $inv_item is &quot;key&quot;)[(t_app: &quot;You enter the locked room.&quot;)]\
 (else:)[(t_app: &quot;The door is locked. You cannot enter.&quot;)]\
-\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
@@ -278,7 +265,6 @@ As you take it out, you fumble it and it rolls under the machine. While leaning 
 ]</tw-passagedata><tw-passagedata pid="9" name="Inventory" tags="" position="200,500" size="100,100">(t_clr:)\
 (set: $inv_item to &quot;null&quot;)\
 (t_app: &quot;What item do you want to use?&quot;)\
-\
 (live:20)[(print:(t_out:))]
 (if: $inventory&#39;s length is not 0)[\
 (for: each _inv_item, ...$inventory)[\
@@ -301,7 +287,6 @@ As you take it out, you fumble it and it rolls under the machine. While leaning 
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 ]</tw-passagedata><tw-passagedata pid="11" name="Computer" tags="" position="700,200" size="100,100">(if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
 (t_clr:)(t_app: &quot;You boot up your computer. It takes a bit, but it&#39;s working just fine.&quot;)\
-\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
@@ -317,9 +302,7 @@ Wow, that’s expensive. At least employees are well paid.&quot;)]\
 [[Power off the computer-&gt;4N Office]]
 ]</tw-passagedata><tw-passagedata pid="12" name="3 Hall" tags="" position="1000,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-\
 (t_app: &quot;You enter the 3rd floor hall. There are four doors and staircases heading up and down.&quot;)\
-\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
@@ -332,8 +315,7 @@ Wow, that’s expensive. At least employees are well paid.&quot;)]\
 [[Go downstairs-&gt;2 Hall]]
 ]</tw-passagedata><tw-passagedata pid="13" name="2 Hall" tags="" position="1400,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-\
-(if: $bool_save_technician is true)[(set: $delay to 130)(t_app: &quot;As you go down the stairs, you see that water is starting to spill into the hallway from the pump room to the east, and at the same time you hear a crash and a cry for help from the break room to the south.
+(if: $bool_save_technician is true)[(set: $delay to 15000)(t_app: &quot;As you go down the stairs, you see that water is starting to spill into the hallway from the pump room to the east, and at the same time you hear a crash and a cry for help from the break room to the south.
 
 You know that the water flooding out is nuclear coolant, and it might be radioactive. Since the station uses a CANDU reactor, it can run on unrefined uranium, but the coolant is heavy water which can be toxic in high enough concentrations.
 
@@ -342,24 +324,22 @@ If you don&#39;t stop it right away, it could leak into the environment and caus
 However, that crash sounded terrible and the cry for help sounded even worse. It sounds like they need your help right away.&quot;)]\
 (else-if: $bool_valve_closed is false)[(t_app: &quot;The water level is still rising! You need to take care of that right away!&quot;)]\
 (else:)[(set: $delay to 1)(t_app: &quot;You enter the 2nd floor hall. There are four doors and staircases heading up and down. The coolant is slowly draining away.&quot;)\
-]\
+](else:)[(set: $delay to 1)}
 \
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
-(link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
+(after: $delay)[(link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 [[Go north to the janitor&#39;s closet-&gt;2N Janitor&#39;s Closet]]
 [[Go east to the pump room-&gt;2E Pump Room]]
 [[Go south to the storage closet-&gt;2S Storage Closet]]
 [[Go west to the reactor-&gt;2W Reactor]]
 [[Go upstairs-&gt;3 Hall]]
 [[Go downstairs-&gt;1 Hall]]
-]</tw-passagedata><tw-passagedata pid="14" name="1 Hall" tags="" position="1800,400" size="100,100">(if: not ((history:) contains &quot;1 Hall&quot;))[(goto: &quot;Phone Rings&quot;)]\
+]]</tw-passagedata><tw-passagedata pid="14" name="1 Hall" tags="" position="1800,400" size="100,100">(if: not ((history:) contains &quot;1 Hall&quot;))[(goto: &quot;Phone Rings&quot;)]\
 (t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-\
 (t_app: &quot;You enter the ground floor hall. There are four doors and a staircase heading up, as well as the exit.&quot;)\
-\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
@@ -371,7 +351,6 @@ However, that crash sounded terrible and the cry for help sounded even worse. It
 [[Leave the building-&gt;Exit Confirmation]]
 ]</tw-passagedata><tw-passagedata pid="15" name="Note with Tasks" tags="" position="200,600" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-\
 (t_app: &quot;It&#39;s a note with tasks on it - you&#39;d better get these done to avoid a disaster
 &quot;)\
 (t_app: &quot;\n&gt; Make an evacuation announcement&quot;)(if: $bool_announcement is true)[(t_app: &quot; DONE!&quot;)]\
@@ -379,23 +358,18 @@ However, that crash sounded terrible and the cry for help sounded even worse. It
 (t_app: &quot;\n&gt; Insert the control rods&quot;)(if: $bool_control_rods is true)[(t_app: &quot; DONE!&quot;)]\
 (t_app: &quot;\n&gt; Replace the coolant pump&quot;)(if: $bool_pump_replaced is true)[(t_app: &quot; DONE!&quot;)]\
 (t_app: &quot;\n&gt; Shut off the outflow&quot;)(if: $bool_outflow_closed is true)[(t_app: &quot; DONE!&quot;)]\
-
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (link: &quot;Close&quot;)[(goto: (history:)&#39;s 2ndlast)]
 ]</tw-passagedata><tw-passagedata pid="16" name="Code" tags="" position="300,600" size="100,100">(t_clr:)\
-\
 (t_app: &quot;On the note is written \&quot;040202\&quot;.&quot;)\
-\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (link: &quot;Close&quot;)[(goto: (history:)&#39;s 2ndlast)]
 ]</tw-passagedata><tw-passagedata pid="17" name="Family Picture" tags="" position="400,600" size="100,100">(t_clr:)\
-\
 (t_app: &quot;You take a look at the picture of your family and smile.&quot;)\
-\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
@@ -428,11 +402,9 @@ The dim lighting of the closet reveals only the empty shelves.&quot;)]\
 [[Go to the hall-&gt;2 Hall]]
 ]</tw-passagedata><tw-passagedata pid="20" name="2E Pump Room" tags="" position="1500,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-\
 (if: $bool_save_technician is true)[(t_app: &quot;The water level is rising, but it&#39;s only around knee level.&quot;)]\
 (else:)[(t_app: &quot;The water level is rising, and it&#39;s already up to your chest.&quot;)]\
 (t_app:&quot; You see the open valve is reachable from the entrance.&quot;)\
-\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
@@ -447,9 +419,7 @@ Really bad.&quot;)]\
 ]]\
 [[Go to the hall-&gt;2 Hall]]
 ]</tw-passagedata><tw-passagedata pid="21" name="2S Storage Closet" tags="" position="1400,500" size="100,100">(t_clr:)\
-\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-\
 (if: $bool_save_technician is true)[(t_app: &quot;As you enter, you see Kapi, one of the technicians, with the water level rising around you.
 
 \&quot;HELP ME! A SHELF FELL ON ME AND I&#39;M TRAPPED\&quot;
@@ -462,7 +432,6 @@ It&#39;s Kapi, one of the technicians. You didn&#39;t get to him quick enough.
 Beside him, you see his keycard floating.&quot;)(set: $bool_seen_kapi to true)]\
 (else-if: $bool_technician_saved is true)[(t_app: &quot;The water has receded. The room is a mess of toppled shelves.&quot;)]\
 (else:)[(t_app: &quot;The water has receded, revealing Kapi trapped under a shelf, lying still. It hurts to look.&quot;)]\
-\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
@@ -480,11 +449,8 @@ He hands you his keycard. \&quot;You might need this.\&quot;
 Kapi leaves.&quot;)(set: $inventory to it + (a: &quot;keycard&quot;))]]\
 (else-if: ($bool_technician_saved is false) and (not($inventory contains &quot;keycard&quot;)))[(link: &quot;Grab the floating keycard\n&quot;)[(set: $inventory to it + (a: &quot;keycard&quot;))(t_app: &quot;\nYou grab the keycard, trying not to look at Kapi.&quot;)]]\
 [[Go to the hall-&gt;2 Hall]]
-]
-
-</tw-passagedata><tw-passagedata pid="22" name="2W Reactor" tags="" position="1300,400" size="100,100">(t_clr:)\
+]</tw-passagedata><tw-passagedata pid="22" name="2W Reactor" tags="" position="1300,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-\
 (if: $bool_pump_replaced is true)[(t_app: &quot;You spot your new replacement pump. It&#39;s humming nicely.
 The room feels cooler now.&quot;)]\
 (else:)[\
@@ -501,7 +467,6 @@ If the coolant isn&#39;t getting pumped, then the reactor isn&#39;t getting cool
 If the reactor isn&#39;t getting cooled, a meltdown could happen.
 
 Clearly you don&#39;t want that happening.&quot;)]]]\
-\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
@@ -524,10 +489,8 @@ Clearly you don&#39;t want that happening.&quot;)]]]\
 [[Go to the hall-&gt;3 Hall]]
 ]</tw-passagedata><tw-passagedata pid="24" name="3E Control Room" tags="" position="1100,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-\
 (t_app: &quot;The control room is empty and everything looks operational. There are a variety of buttons, switches, and keypads.&quot;)\
 (if: $inventory contains &quot;note with tasks&quot;)[(if: $bool_control_rods is false)[(t_app: &quot; The button to engage the control rods is flashing red, with a keypad below it.&quot;)](else:)[(t_app: &quot; The button to engage the control rods is a steady green.&quot;)]]\
-\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
@@ -536,10 +499,8 @@ Clearly you don&#39;t want that happening.&quot;)]]]\
 [[Go to the hall-&gt;3 Hall]]
 ]</tw-passagedata><tw-passagedata pid="25" name="3S Break Room" tags="" position="1000,500" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-\
 (t_app: &quot;The smell of leftover abandoned food fills the air.&quot;)\
 (if: not ($inventory contains &quot;code&quot;))[(t_app: &quot; You notice a small note on the table in front of you with a code written on it.&quot;)]\
-\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
@@ -549,10 +510,8 @@ Clearly you don&#39;t want that happening.&quot;)]]]\
 ]</tw-passagedata><tw-passagedata pid="26" name="3W Bathroom" tags="" position="900,400" size="100,100">(t_clr:)\
 (set: $num_washroom to (random: 3, 5))\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-\
 (if: $inv_item is &quot;toilet paper&quot;)[(t_app: &quot;You replace the toilet paper and throw the empty roll in the garbage. As you drop it in, you notice a shiny toonie in the trash.&quot;)(set: $bool_toonie_spotted to true)(set: $inventory to it - (a: &quot;toilet paper&quot;))(set: $bool_empty_toilet_paper to false)]\
 (else:)[(t_app: &quot;It&#39;s a bathroom. There&#39;s not much to notice.&quot;)]\
-\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
@@ -568,11 +527,8 @@ Clearly you don&#39;t want that happening.&quot;)]]]\
 
 </tw-passagedata><tw-passagedata pid="27" name="Exit Confirmation" tags="" position="1800,500" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-\
 (t_app: &quot;A faint beam of guiding moonlight passes through the slits on the door. The exit lies just in front of you.&quot;)\
 (if: not (($bool_announcement is true) and (($bool_valve_closed is true) or (($bool_technician_saved is true) and ($bool_save_technician is false))) and ($bool_control_rods is true) and ($bool_pump_replaced is true) and ($bool_outflow_closed)))[(t_app: &quot;\n\nYou still have some tasks unfinished. Are you sure you want to leave?&quot;)]\
-
-
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
@@ -581,27 +537,22 @@ Clearly you don&#39;t want that happening.&quot;)]]]\
 [[Leave the building-&gt;End]]
 ]</tw-passagedata><tw-passagedata pid="28" name="Phone Rings" tags="" position="1800,100" size="100,100">(text-style:&quot;shudder&quot;)[#BRRRR-BRRRR-BRRRR]\
 (t_clr:)\
-\
 (t_app: &quot;Your phone is ringing.&quot;)\
-\
 (after: 1000)[(live:20)[(print:(t_out:))]]
 
 (after: 2000)[
 [[Pick up-&gt;Phone Call]] 
 [[Ignore-&gt;1 Hall]]]</tw-passagedata><tw-passagedata pid="29" name="Phone Call" tags="" position="1900,100" size="100,100">(t_clr:)\
 (set: $name to &quot;Jack&quot;)
-\
 (t_app: &quot;//Atreus, your son://\n&quot;)\
 (if: $title is &quot;Mr.&quot;)[(t_app: &quot;Daddy, when&quot;)]\
 (else-if: $title is &quot;Ms.&quot;)[(t_app: &quot;Mommy, when&quot;]\
 (else:)[(t_app: &quot;When&quot;)]\
 (t_app: &quot; are you getting back home? I&#39;m scared.\n\n&quot;)\
-\
 (t_app: &quot;//Betty, your wife://\n&quot;)\
 (if: $name contains &quot; &quot;)[(t_app: (split: &quot; &quot;, $name)&#39;s 1st)]\
 (else:)[(t_app: $name)]\
 (t_app: &quot;, stop what you&#39;re doing and come back home now. We&#39;re getting worried.&quot;)\
-\
 (live:20)[(print:(t_out:))]
 
 
@@ -614,7 +565,6 @@ Clearly you don&#39;t want that happening.&quot;)]]]\
 (event: when $call is &quot;I&#39;ll be home soon, don&#39;t worry about me. Goodbye.&quot;)[(after: 3000)[(goto: &quot;1 Hall&quot;)]]\
 </tw-passagedata><tw-passagedata pid="30" name="End" tags="" position="1800,600" size="100,100">Double-click this passage to edit it.</tw-passagedata><tw-passagedata pid="31" name="1N Machine Shop" tags="" position="1800,300" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-\
 (if: $inv_item is &quot;keycard&quot;)[\
 (if: (not ($inventory contains &quot;replacement pump&quot;)) and ($inventory contains &quot;note with tasks&quot;))[(t_app: &quot;You swipe Kapi&#39;s keycard and the door unlocks.
 The shop is eerie.
@@ -625,7 +575,6 @@ The shop is eerie.
 It&#39;s never this quiet. You don&#39;t like it.&quot;)]\
 ]\
 (else:)[(t_app: &quot;The iridescent electronic lock lights up in the darkness. The shop requires a keycard to enter.&quot;)]\
-\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
@@ -634,13 +583,11 @@ It&#39;s never this quiet. You don&#39;t like it.&quot;)]\
 [[Go to the hall-&gt;1 Hall]]
 ]</tw-passagedata><tw-passagedata pid="32" name="1E Outflow Shutoff" tags="" position="1900,400" size="100,100">(t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-\
 (t_app: &quot;The outflow from the reaction heats up the water in the lakes surrounding the plant.
 It&#39;s damaging enough to the local ecosystem normally.
 You hate to think how much damage radiated water could cause.&quot;)\
 (if: ($bool_outflow_closed is false) and ($inventory contains &quot;note with tasks&quot;))[(t_app: &quot;\nYou see that the outflow valve is open, meaning heated water is flowing out of the plant&quot;)]\
 (else-if: $bool_outflow_closed is true)[(t_app: &quot;\nIt&#39;s a good thing you&#39;ve already closed the outflow valve.&quot;)]\
-\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
