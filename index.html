@@ -62,7 +62,18 @@ tw-passage {
 		const all = Harlowe.storage.load('all');
 		const current = Harlowe.storage.load('current');
 		if (all.length > current.length) {
-			current.push(all[current.length]);
+			if (all[current.length] === '(') {
+    		do {
+      		current.push(all[current.length]);
+    		} while (all[current.length - 1] !== ')')
+				if (all[current.length] === '[') {
+    			do {
+      			current.push(all[current.length]);
+    			} while (all[current.length - 1] !== ']')
+  			}
+  		} else {
+   			current.push(all[current.length]);
+  		}
 			Harlowe.storage.save('current', current);
 			return current.join('').concat('█');
 		} else {
@@ -351,20 +362,20 @@ Wow, that’s expensive. At least employees are well paid.&quot;)]\
 
 &quot;)](after: 12000)[(t_app:&quot;If you don&#39;t stop it right away, it could leak into the environment and cause radiation poisoning for everyone in the area.
 
-&quot;)](after: 16000)[(t_app:&quot;However, that crash sounded terrible and the cry for help sounded even worse. It sounds like they need your help right away.&quot;)(set: $bool_delay_options to false)]]\
-(else-if: $bool_valve_closed is false)[(t_app: &quot;The water level is still rising! You need to take care of that right away!&quot;)]\
-(else:)[(set: $delay to 1)(t_app: &quot;You enter the 2nd floor hall. There are four doors and staircases heading up and down. The coolant is slowly draining away.&quot;)]\
+&quot;)](after: 16000)[(t_app:&quot;However, that crash sounded terrible and the cry for help sounded even worse. It sounds like they need your help right away.&quot;)(set: $bool_delay_options to false)(if: not ($inventory contains &quot;hazmat suit&quot;))[(t_app: &quot;\n Before going in here, you need to put on a hazmat suit to protect yourself!&quot;)]]]\
+(else-if: $bool_valve_closed is false)[(t_app: &quot;The water level is still rising! You need to take care of that right away!&quot;)(if: not ($inventory contains &quot;hazmat suit&quot;))[(t_app: &quot;\n Before going in here, you need to put on a hazmat suit to protect yourself!&quot;)]]\
+(else:)[(set: $delay to 1)(t_app: &quot;You enter the 2nd floor hall. There are four doors and staircases heading up and down. The coolant is slowly draining away.&quot;)(if: $bool_hazmat is false)[(t_app: &quot; You grimace as you feel the radioactive coolant. This is very dangerous, but there&#39;s nothing you can do about it.&quot;)]]\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
-(event: when (((t_done:) is true) and ($bool_delay_options is false)) or ($bool_save_technician is false))[(link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
+(event: when (((t_done:) is true) and ($bool_delay_options is false)) or ($bool_save_technician is false))[(if: not ($inventory contains &quot;hazmat suit&quot;))[[[Go back upstairs-&gt;3 Hall]]](else:)[(link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 [[Go north to the janitor&#39;s closet-&gt;2N Janitor&#39;s Closet]]
 [[Go east to the pump room-&gt;2E Pump Room]]
 [[Go south to the storage closet-&gt;2S Storage Closet]]
 [[Go west to the reactor-&gt;2W Reactor]]
 [[Go upstairs-&gt;3 Hall]]
 [[Go downstairs-&gt;1 Hall]]
-]]</tw-passagedata><tw-passagedata pid="14" name="1 Hall" tags="" position="1800,400" size="100,100">(if: not ((history:) contains &quot;1 Hall&quot;))[(goto: &quot;Phone Rings&quot;)]\
+]]]</tw-passagedata><tw-passagedata pid="14" name="1 Hall" tags="" position="1800,400" size="100,100">(if: not ((history:) contains &quot;1 Hall&quot;))[(goto: &quot;Phone Rings&quot;)]\
 (if: not (((history:)&#39;s last is &quot;Inventory&quot;) or ((history:)&#39;s last is &quot;Code&quot;) or ((history:)&#39;s last is &quot;Note with Tasks&quot;) or ((history:)&#39;s last is &quot;Red Bull&quot;) or ((history:)&#39;s last is &quot;Family Picture&quot;)))[(set:$inv_item to &quot;null&quot;)](align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[(if: $inv_item is not &quot;null&quot;)[(print: &quot;Used &quot; + $inv_item + &quot;. &quot;)](print: &quot;Score: &quot; + (str:$score))]&lt;score|(set: _score to $score)(event: when $score &gt; _score)[(rerun: ?score)]\
 (t_clr:)\
 (t_app: &quot;You enter the ground floor hall. There are four doors and a staircase heading up, as well as the exit.&quot;)\
@@ -432,9 +443,9 @@ The dim lighting of the closet reveals only the empty shelves.&quot;)]\
 [[Go to the hall-&gt;2 Hall]]
 ]</tw-passagedata><tw-passagedata pid="20" name="2E Pump Room" tags="" position="1500,400" size="100,100">(if: not (((history:)&#39;s last is &quot;Inventory&quot;) or ((history:)&#39;s last is &quot;Code&quot;) or ((history:)&#39;s last is &quot;Note with Tasks&quot;) or ((history:)&#39;s last is &quot;Red Bull&quot;) or ((history:)&#39;s last is &quot;Family Picture&quot;)))[(set:$inv_item to &quot;null&quot;)](align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[(if: $inv_item is not &quot;null&quot;)[(print: &quot;Used &quot; + $inv_item + &quot;. &quot;)](print: &quot;Score: &quot; + (str:$score))]&lt;score|(set: _score to $score)(event: when $score &gt; _score)[(rerun: ?score)]\
 (t_clr:)\
-(if: $bool_save_technician is true)[(t_app: &quot;The water level is rising, but it&#39;s only around knee level.&quot;)]\
-(else:)[(t_app: &quot;The water level is rising, and it&#39;s already up to your chest.&quot;)]\
-(t_app:&quot; You see the open valve is reachable from the entrance.&quot;)\
+(if: $bool_save_technician is true)[(t_app: &quot;The water level is rising, but it&#39;s only around knee level. You see the open valve is reachable from the entrance.&quot;)]\
+(else-if: $bool_valve_closed is false)[(t_app: &quot;The water level is rising, and it&#39;s already up to your chest. You see the open valve is reachable from the entrance.&quot;)]\
+(else:)[(t_app: &quot;With the valve closed, the water level is going down.&quot;)]\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
@@ -546,7 +557,7 @@ Clearly you don&#39;t want that happening.&quot;)]]]\
 (link_repeat: &quot;Use the bathroom&quot;)[(if: $bool_empty_toilet_paper is false)[(t_app: &quot;\nYou use the bathroom, clean yourself up, and feel refreshed.&quot;)(set: $num_washroom to it - 1)](else:)[(t_app: &quot;\nYou can&#39;t use the bathroom, there&#39;s no toilet paper!&quot;)]]
 (event: when $num_washroom is 0)[\
 (if: (not ($inventory contains &quot;toonie&quot;)) and (not ($inventory contains &quot;key&quot;)) and (not ($inventory contains &quot;red bull&quot;)))[\
-(set: $bool_empty_toilet_paper to true)(t_app: &quot; As you finish up, you realized you&#39;ve used the last of the toilet paper. You really ought to get a new roll.&quot;)\
+(set: $bool_empty_toilet_paper to true)(t_app: &quot; As you finish up, you realize you&#39;ve used the last of the toilet paper. You really ought to get a new roll.&quot;)\
 ]]\
 [[Go to the hall-&gt;3 Hall]]
 ]
@@ -582,7 +593,7 @@ Clearly you don&#39;t want that happening.&quot;)]]]\
 (live:20)[(print:(t_out:))]
 
 
-(after: 4000)[(force-input-box:2bind $call, &quot;=======XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX===&quot;,1,&quot;I&#39;ll be home soon, don&#39;t worry about me. Goodbye.&quot;)]
+(after: 4000)[(force-input-box:2bind $call, &quot;=======XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX===&quot;,1,&quot;I&#39;ll be home soon, don&#39;t worry about me. Goodbye. &quot;)]
 (after: 5000)[
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (link: &quot;Hang up&quot;)[(goto: &quot;1 Hall&quot;)]\
@@ -631,22 +642,68 @@ Radioactive waste, which is generated as a byproduct of nuclear power plants, ca
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
-(link: &quot;\nLoad the waste into the truck&quot;)[(if: $bool_hazmat is true)[(set: $bool_waste_removed to true)(set: $score to it + 1)(t_app: &quot;\nYou spend some time moving the barrels into the vehicle.
+(link: &quot;Load the waste into the truck\n&quot;)[(if: $bool_hazmat is true)[(set: $bool_waste_removed to true)(set: $score to it + 1)(t_app: &quot;\nYou spend some time moving the barrels into the vehicle.
 These vehicles are designed to very strict standards to keep the waste contained in any sort of disaster.
 After they&#39;ve been taken away, vitrification should be used to reduce radioactive waste and avoid leaks during transit. It is a technique that turns waste into stable glass.
-It&#39;s safer now that they&#39;re dealt with.&quot;)](else:)[(t_app: &quot;It&#39;s not safe to move the waste without safety equipment. Maybe there&#39;s a hazmat suit around somewhere?&quot;)]\
+It&#39;s safer now that they&#39;re dealt with.&quot;)](else:)[(if: $inventory contains &quot;hazmat suit&quot;)[(t_app: &quot;It&#39;s not safe to do this with a ripped hazmat suit. It will have to wait until other staff can get here.&quot;)](else:)[(t_app: &quot;\nIt&#39;s not safe to move the waste without safety equipment. Maybe there&#39;s a hazmat suit around somewhere?&quot;)]]]\
 [[Go to the hall-&gt;1 Hall]]
 ]</tw-passagedata><tw-passagedata pid="34" name="Secret Room" tags="" position="600,600" size="100,100">(if: not (((history:)&#39;s last is &quot;Inventory&quot;) or ((history:)&#39;s last is &quot;Code&quot;) or ((history:)&#39;s last is &quot;Note with Tasks&quot;) or ((history:)&#39;s last is &quot;Red Bull&quot;) or ((history:)&#39;s last is &quot;Family Picture&quot;)))[(set:$inv_item to &quot;null&quot;)](align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[(if: $inv_item is not &quot;null&quot;)[(print: &quot;Used &quot; + $inv_item + &quot;. &quot;)](print: &quot;Score: &quot; + (str:$score))]&lt;score|(set: _score to $score)(event: when $score &gt; _score)[(rerun: ?score)]\
-(t_clr:)(set: $bool_delay_options to true)(set: $bool_lights to false)(t_app:&quot;You enter the room as darkness transcends like the thick velvet curtains of the theater.
+(t_clr:)(set: $bool_delay_options to true)(set: $bool_lights to false)(t_app:&quot;You enter the room as darkness transcends like the thick velvet curtains of a theater.
 
 &quot;)(after: 4000)[(t_app:&quot;You inhale the dust as it lays thickly like winter&#39;s first snow, but instead of being a spirit-raising brilliant white, it&#39;s a depressing dirty gray.
 
-&quot;)](after: 10000)[(t_app:&quot;You caress the paintless walls to find the lights.&quot;)(set: $bool_lights to true)]\
+&quot;)](after: 10000)[(t_app:&quot;You caress the paintless walls to find the lights.&quot;)](after: 11000)[(set: $bool_lights to true)]\
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (after: 200)[(event: when $bool_lights is true and (t_done:))[(link: &quot;Turn on the lights&quot;)[(goto: &quot;Lights&quot;)]]]\
-]</tw-passagedata><tw-passagedata pid="35" name="Lights" tags="" position="600,700" size="100,100">under development. [[go back-&gt;4 Hall]] </tw-passagedata></tw-storydata>
+]</tw-passagedata><tw-passagedata pid="35" name="Lights" tags="" position="600,700" size="100,100">(if: not (((history:)&#39;s last is &quot;Inventory&quot;) or ((history:)&#39;s last is &quot;Code&quot;) or ((history:)&#39;s last is &quot;Note with Tasks&quot;) or ((history:)&#39;s last is &quot;Red Bull&quot;) or ((history:)&#39;s last is &quot;Family Picture&quot;)))[(set:$inv_item to &quot;null&quot;)](align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[(if: $inv_item is not &quot;null&quot;)[(print: &quot;Used &quot; + $inv_item + &quot;. &quot;)](print: &quot;Score: &quot; + (str:$score))]&lt;score|(set: _score to $score)(event: when $score &gt; _score)[(rerun: ?score)]\
+(t_clr:)(set: $bool_delay_options to true)\
+[(t_app:&quot;
+
+
+The light turns on and terror stabs your heart as you realize what is being brought upon your eyes.
+
+&quot;)](after: 2000)[(t_app:&quot;Newspapers articles covered with bloody X-marks. 
+
+&quot;)](after: 4000)[(t_app:&quot;(text-colour:red)[LIES LIES LIES] scattered across the room.
+
+&quot;)](after: 6000)[(set: $bool_delay_options to false)]\
+(print: &quot;You enter the room as darkness transcends like the thick velvet curtains of the theater.
+
+You inhale the dust as it lays thickly like winter&#39;s first snow, but instead of being a spirit-raising brilliant white, it&#39;s a depressing dirty gray.
+
+You caress the paintless walls to find the lights.&quot;)
+(live:20)[(print:(t_out:))]
+
+(align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
+(after: 200)[(event: when $bool_delay_options is false and (t_done:))[(link: &quot;Grab one of the articles&quot;)[(goto: &quot;Article&quot;)]]]\
+]</tw-passagedata><tw-passagedata pid="36" name="Article" tags="" position="700,700" size="100,100">(b4r:&quot;solid&quot;)+(b4r-colour:#1df326)[\
+###Nuclear Power: Better than Gas Across Many Metrics 
+* Nuclear power is less expensive at about $125 per levelized megawatt hour compared to gas at $225 per levelized megawatt hour.
+* Nuclear produces zero carbon emissions compared to gas which produces 50 CO2 equivalent grams per megajoule. 
+* Additionally, nuclear power is reliable and flexible enough to supplement less consistent forms of renewable energy.
+]
+
+(align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
+(after: 2000)[[[Put down-&gt;Plans]]]\
+]</tw-passagedata><tw-passagedata pid="37" name="Plans" tags="" position="800,700" size="100,100">(if: not (((history:)&#39;s last is &quot;Inventory&quot;) or ((history:)&#39;s last is &quot;Code&quot;) or ((history:)&#39;s last is &quot;Note with Tasks&quot;) or ((history:)&#39;s last is &quot;Red Bull&quot;) or ((history:)&#39;s last is &quot;Family Picture&quot;)))[(set:$inv_item to &quot;null&quot;)](align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[(if: $inv_item is not &quot;null&quot;)[(print: &quot;Used &quot; + $inv_item + &quot;. &quot;)](print: &quot;Score: &quot; + (str:$score))]&lt;score|(set: _score to $score)(event: when $score &gt; _score)[(rerun: ?score)]\
+(t_clr:)(set: $bool_delay_options to true)(set: $bool_lights to false)(t_app:&quot;You walk towards the table and find a map of the nuclear plant, with red circles on the machines.
+
+It&#39;s a plan to cause a nuclear meltdown.
+
+You flip the map over.
+
+##(text-colour:red)[GAS WILL PERSEVERE]&quot;)
+(live:20)[(print:(t_out:))]
+
+(align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
+(after: 2000)[(link: &quot;Leave&quot;)[(t_app: &quot;
+
+As you rush out, a splinter of the table snags your hazmat suit and rips one leg open.
+
+You&#39;re no longer protected from radiation.&quot;)(set: $bool_hazmat to false)(after: 10000)[(event: when (t_done:) is true)[(goto: &quot;4 Hall&quot;)]]]]\
+]</tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">"use strict";var _slicedToArray=function(){return function(e,t){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return function(e,t){var n=[],r=!0,a=!1,i=void 0;try{for(var o,s=e[Symbol.iterator]();!(r=(o=s.next()).done)&&(n.push(o.value),!t||n.length!==t);r=!0);}catch(e){a=!0,i=e}finally{try{!r&&s.return&&s.return()}finally{if(a)throw i}}return n}(e,t);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e};function _defineProperty(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function _toConsumableArray(e){if(Array.isArray(e)){for(var t=0,n=Array(e.length);t<e.length;t++)n[t]=e[t];return n}return Array.from(e)}!function(){
 /**
  * @license almond 0.3.3 Copyright jQuery Foundation and other contributors.
