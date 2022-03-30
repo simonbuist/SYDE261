@@ -140,7 +140,7 @@ Yan Shuang Zhang 20905741
 Created with Twine 2.0
 https://twinery.org/
 
-Game version 1.0.2&quot;)\
+Game version 1.0.3&quot;)\
 \
 (live:20)[(print:(t_out:))]
 
@@ -197,7 +197,7 @@ From the hall, you hear your secretary, Robin, say \&quot;&quot; + $title + &quo
 (link: &quot;Clean your desk\n&quot;)[\
 (set: $bool_clean_desk to true)(t_app: &quot;\nIt takes a few minutes to clean up, but once you&#39;re done you notice a photo frame flipped over.&quot;)\
 (link: &quot;Pick up photo frame\n&quot;)[\
-(t_app: &quot;\nAh, it’s your loving family. Your son, Atreus, is waiting for you to get home to celebrate winning his soccer tournament. Your wife and son haven’t seen you in a while because you’ve been working so much. Get your job done and go back home and be there for your family!&quot;)\
+(t_app: &quot;\nAh, it’s your loving family. Your son, Radahn, is waiting for you to get home to celebrate winning his soccer tournament. Your wife and son haven’t seen you in a while because you’ve been working so much. Get your job done and go back home and be there for your family!&quot;)\
 (set: $inventory to it + (a: &quot;family picture&quot;))]]]\
 [[Go to the hall-&gt;4 Hall]]
 ]]</tw-passagedata><tw-passagedata pid="5" name="4 Hall" tags="" position="600,400" size="100,100">(if: not (((history:)&#39;s last is &quot;Inventory&quot;) or ((history:)&#39;s last is &quot;Code&quot;) or ((history:)&#39;s last is &quot;Note with Tasks&quot;) or ((history:)&#39;s last is &quot;Red Bull&quot;) or ((history:)&#39;s last is &quot;Family Picture&quot;)))[(set:$inv_item to &quot;null&quot;)](align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[(if: $inv_item is not &quot;null&quot;)[(print: &quot;Used &quot; + $inv_item + &quot;. &quot;)](print: &quot;Score: &quot; + (str:$score))]&lt;score|(set: _score to $score)(event: when $score &gt; _score)[(rerun: ?score)]\
@@ -287,11 +287,11 @@ You hack open the front of the vending machine and grab your drink.&quot;)(set: 
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
-(link: &quot;Buy a drink\n&quot;)\
+(link: &quot;Buy a drink&quot;)\
 [(if: $bool_broken_vending is true)[(t_app: &quot;\nYou&#39;ve hacked this machine to pieces. You&#39;re not even sure where to put your money.&quot;)]
 (if: $inventory contains &quot;toonie&quot;)[(set: $inventory to it - (a: &quot;toonie&quot;))(set: $inventory to it + (a: &quot;red bull&quot;))(set: $bool_key_on_ground to true)(t_app: &quot;\nYou put the toonie in the vending machine and buy your favourite drink - a nice cold red bull.
 As you take it out, you fumble it and it rolls under the machine. While leaning down to grab it, you notice a key under the vending machine. How odd!&quot;)]\
-(else:)[(t_app: &quot;\nYou have no cash on you!&quot;)]]\
+(else:)[(t_app: &quot;\nYou have no cash on you!&quot;)]]
 (event: when $bool_key_on_ground is true)[(link: &quot;Pick up the key\n&quot;)[(set: $bool_key_on_ground to false)(set: $inventory to it + (a: &quot;key&quot;))(t_app: &quot;\nYou reach under the machine and grab the key. It&#39;s a little sticky. Ew.&quot;)]]\
 [[Go to the hall-&gt;4 Hall]]
 ]</tw-passagedata><tw-passagedata pid="8" name="4S Access Panel" tags="" position="600,500" size="100,100">(if: not (((history:)&#39;s last is &quot;Inventory&quot;) or ((history:)&#39;s last is &quot;Code&quot;) or ((history:)&#39;s last is &quot;Note with Tasks&quot;) or ((history:)&#39;s last is &quot;Red Bull&quot;) or ((history:)&#39;s last is &quot;Family Picture&quot;)))[(set:$inv_item to &quot;null&quot;)](align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[(if: $inv_item is not &quot;null&quot;)[(print: &quot;Used &quot; + $inv_item + &quot;. &quot;)](print: &quot;Score: &quot; + (str:$score))]&lt;score|(set: _score to $score)(event: when $score &gt; _score)[(rerun: ?score)]\
@@ -401,13 +401,13 @@ Wow, that’s expensive. At least employees are well paid.&quot;)]\
 ]</tw-passagedata><tw-passagedata pid="15" name="Note with Tasks" tags="" position="200,600" size="100,100">(align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[(print: &quot;Score: &quot; + (str:$score))]&lt;score|(set: _score to $score)(event: when $score &gt; _score)[(rerun: ?score)]\
 (t_clr:)\
 (if: (history:)&#39;s last is not &quot;Inventory&quot;)[(set:$inv_item to &quot;null&quot;)]\
-(t_app: &quot;It&#39;s a note with tasks on it - you&#39;d better get these done to avoid a disaster
-&quot;)\
-(t_app: &quot;\n&gt; Make an evacuation announcement&quot;)(if: $bool_announcement is true)[(t_app: &quot; DONE!&quot;)]\
-(t_app: &quot;\n&gt; Close the coolant valve&quot;)(if: ($bool_technician_saved is true) and ($bool_save_technician is false))[(t_app: &quot; FAILED (you decided it was more important to save Kapi)&quot;)](else-if: $bool_valve_closed is true)[(t_app: &quot; DONE!&quot;)]\
-(t_app: &quot;\n&gt; Insert the control rods&quot;)(if: $bool_control_rods is true)[(t_app: &quot; DONE!&quot;)]\
-(t_app: &quot;\n&gt; Replace the coolant pump&quot;)(if: $bool_pump_replaced is true)[(t_app: &quot; DONE!&quot;)]\
-(t_app: &quot;\n&gt; Shut off the outflow&quot;)(if: $bool_outflow_closed is true)[(t_app: &quot; DONE!&quot;)]\
+&quot;It&#39;s a note with tasks on it - you&#39;d better get these done to avoid a disaster!
+
+(link-repeat: &quot;&gt; Make an evacuation announcement&quot;)[(t_app: &quot;\nYour office computer should be able to make the announcement.&quot;)](if: $bool_announcement is true)[ DONE!]
+(link-repeat: &quot;&gt; Close the coolant valve&quot;)[(t_app: &quot;\nThat&#39;s in the pump room! It&#39;s on the 3rd floor&quot;)](if: ($bool_technician_saved is true) and ($bool_save_technician is false))[ FAILED (you decided it was more important to save Kapi)](else-if: $bool_valve_closed is true)[ DONE!]
+(link-repeat: &quot;&gt; Insert the control rods&quot;)[(t_app: &quot;\nYou know that there&#39;s a button for that in the control room.&quot;)](if: $bool_control_rods is true)[&quot; DONE!&quot;]
+(link-repeat: &quot;&gt; Replace the coolant pump&quot;)[(t_app: &quot;\nThe broken one is in the reactor.&quot;)](if: $bool_pump_replaced is true)[&quot; DONE!&quot;]
+(link-repeat: &quot;&gt; Shut off the outflow&quot;)[(t_app: &quot;\nThat&#39;s on the ground floor. You can probably save that one for last.&quot;)](if: $bool_outflow_closed is true)[&quot; DONE!&quot;]
 (live:20)[(print:(t_out:))]
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
@@ -461,7 +461,9 @@ The dim lighting of the closet reveals only the empty shelves.&quot;)]\
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 (if: $bool_valve_closed is false)[(link: &quot;Close valve\n&quot;)[(set: $bool_valve_closed to true)(t_app: &quot;\nYou close the valve and water begins to recede.&quot;)\
-(if: $bool_technician_saved is false)[(set: $score to it + 1)(set: $bool_save_technician to false)(t_app: &quot; It seems like not too much coolant leaked out. The drains should be able to manage it safely. That&#39;s one crisis averted.&quot;)]\
+(if: $bool_technician_saved is false)[(set: $score to it + 1)(set: $bool_save_technician to false)(t_app: &quot; It seems like not too much coolant leaked out. The drains should be able to manage it safely. That&#39;s one crisis averted.
+
+However, you notice the cries for help have stopped. It seems like you&#39;re too late.&quot;)]\
 (else:)[(t_app: &quot; Unfortunately, you took too much time saving the technician and a lot of coolant leaked. A lot of it will spill into the environment.
 
 That&#39;s bad.
@@ -575,7 +577,7 @@ Clearly you don&#39;t want that happening.&quot;)]]]\
 </tw-passagedata><tw-passagedata pid="27" name="Exit Confirmation" tags="" position="1800,500" size="100,100">(if: not (((history:)&#39;s last is &quot;Inventory&quot;) or ((history:)&#39;s last is &quot;Code&quot;) or ((history:)&#39;s last is &quot;Note with Tasks&quot;) or ((history:)&#39;s last is &quot;Red Bull&quot;) or ((history:)&#39;s last is &quot;Family Picture&quot;)))[(set:$inv_item to &quot;null&quot;)](align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[(if: $inv_item is not &quot;null&quot;)[(print: &quot;Used &quot; + $inv_item + &quot;. &quot;)](print: &quot;Score: &quot; + (str:$score))]&lt;score|(set: _score to $score)(event: when $score &gt; _score)[(rerun: ?score)]\
 (t_clr:)\
 (t_app: &quot;A faint beam of guiding moonlight passes through the slits on the door. The exit lies just in front of you.&quot;)\
-(if: $bool_hazmat is false)[(t_app: &quot;Your leg with the torn suit is hurting quite a lot. You look down and see it&#39;s turned green.
+(if: $bool_hazmat is false)[(t_app: &quot;\nYour leg with the torn suit is hurting quite a lot. You look down and see it&#39;s turned green.
 Whatever, there&#39;s bigger things to worry about right now.&quot;)]\
 (if: not (($bool_announcement is true) and (($bool_valve_closed is true) or (($bool_technician_saved is true) and ($bool_save_technician is false))) and ($bool_control_rods is true) and ($bool_pump_replaced is true) and ($bool_outflow_closed)))[(t_app: &quot;\n\nYou still have some tasks unfinished. Are you sure you want to leave?&quot;)]\
 (live:20)[(print:(t_out:))]
@@ -603,7 +605,7 @@ Whatever, there&#39;s bigger things to worry about right now.&quot;)]\
 (after: 2000)[
 [[Pick up-&gt;Phone Call]] 
 [[Ignore-&gt;1 Hall]]]</tw-passagedata><tw-passagedata pid="29" name="Phone Call" tags="" position="1900,100" size="100,100">(t_clr:)\
-(t_app: &quot;//Atreus, your son://\n&quot;)\
+(t_app: &quot;//Radahn, your son://\n&quot;)\
 (if: $title is &quot;Mr.&quot;)[(t_app: &quot;Daddy, when&quot;)]\
 (else-if: $title is &quot;Ms.&quot;)[(t_app: &quot;Mommy, when&quot;)]\
 (else:)[(t_app: &quot;When&quot;)]\
@@ -725,7 +727,7 @@ You caress the paintless walls to find the lights.&quot;)
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (after: 2000)[[[Put down-&gt;Plans]]]\
 ]</tw-passagedata><tw-passagedata pid="37" name="Plans" tags="" position="800,700" size="100,100">(if: not (((history:)&#39;s last is &quot;Inventory&quot;) or ((history:)&#39;s last is &quot;Code&quot;) or ((history:)&#39;s last is &quot;Note with Tasks&quot;) or ((history:)&#39;s last is &quot;Red Bull&quot;) or ((history:)&#39;s last is &quot;Family Picture&quot;)))[(set:$inv_item to &quot;null&quot;)](align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[(if: $inv_item is not &quot;null&quot;)[(print: &quot;Used &quot; + $inv_item + &quot;. &quot;)](print: &quot;Score: &quot; + (str:$score))]&lt;score|(set: _score to $score)(event: when $score &gt; _score)[(rerun: ?score)]\
-(t_clr:)(set: $bool_delay_options to true)(set: $bool_lights to false)(t_app:&quot;You walk towards the table and find a map of the nuclear plant, with red circles on the machines.
+(t_clr:)(set: $delay to 2)(set: $bool_delay_options to true)(set: $bool_lights to false)(t_app:&quot;You walk towards the table and find a map of the nuclear plant, with red circles on the machines.
 
 It&#39;s a plan to cause a nuclear meltdown.
 
@@ -739,8 +741,8 @@ You flip the map over.
 
 As you rush out, a splinter of the table snags your hazmat suit and rips one leg open.
 
-##You&#39;re no longer protected from radiation.&quot;)(set: $bool_hazmat to false)(after: 14000)[(event: when (t_done:) is true)[(goto: &quot;4 Hall&quot;)]]]]\
-]</tw-passagedata><tw-passagedata pid="38" name="Bad Ending" tags="" position="1800,600" size="100,100">[#The Kincardine Times]\
+##You&#39;re no longer protected from radiation.&quot;)(set: $bool_hazmat to false)(event: when (t_done:) is true)[\
+(live:2s)[(set: $delay to it - 1)(if: $delay is 0)[(goto: &quot;4 Hall&quot;)]]]]]</tw-passagedata><tw-passagedata pid="38" name="Bad Ending" tags="" position="1800,600" size="100,100">[#The Kincardine Times]\
 =||||=
 (b4r:&quot;solid&quot;)+(b4r-colour:#1df326)+
 (align:&quot;&lt;==&gt;&quot;)+(box:&quot;X&quot;)[\
