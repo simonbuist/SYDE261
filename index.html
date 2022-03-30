@@ -127,13 +127,20 @@ SYDE 261
 Professor Howcroft
 Group 9
 
-Role: Name #ID
-Role: Name
+Code:
+Simon Buist 20896897
+
+Script:
+Ebrahim Yaakoub Agha 20901449
+Joseph Lamonica 20890633
+Paige Kobzar 20914548
+Sophie-Gabrielle Hermanns 20882908
+Yan Shuang Zhang 20905741
 
 Created with Twine 2.0
 https://twinery.org/
 
-Game version 0.3.2&quot;)\
+Game version 1.0.0&quot;)\
 \
 (live:20)[(print:(t_out:))]
 
@@ -571,7 +578,18 @@ Clearly you don&#39;t want that happening.&quot;)]]]\
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
 [[Go back-&gt;1 Hall]]
-[[Leave the building-&gt;End]]
+(link: &quot;Leave the building (End of game)&quot;)[\
+(set: $objectives to 0)\
+(if: $bool_announcement is true)[(set: $objectives to it + 1)]\
+(if: $bool_valve_closed is true)[(set: $objectives to it + 1)]\
+(if: $bool_control_rods is true)[(set: $objectives to it + 1)]\
+(if: $bool_pump_replaced is true)[(set: $objectives to it + 1)]\
+(if: $bool_outflow_closed is true)[(set: $objectives to it + 1)]\
+(if: $objectives &lt; 3)[(goto: &quot;Disastrous Ending&quot;)]\
+(else-if: $objectives &lt; 5)[(goto: &quot;Bad Ending&quot;)]\
+(else-if: $bool_hazmat is false)[(goto: &quot;Hulk Ending&quot;)]\
+(else:)[(goto: &quot;Good Ending&quot;)]\
+]\
 ]</tw-passagedata><tw-passagedata pid="28" name="Phone Rings" tags="" position="1800,100" size="100,100">(text-style:&quot;shudder&quot;)[#BRRRR-BRRRR-BRRRR]\
 (t_clr:)\
 (t_app: &quot;Your phone is ringing.&quot;)\
@@ -583,7 +601,7 @@ Clearly you don&#39;t want that happening.&quot;)]]]\
 (set: $name to &quot;Jack&quot;)
 (t_app: &quot;//Atreus, your son://\n&quot;)\
 (if: $title is &quot;Mr.&quot;)[(t_app: &quot;Daddy, when&quot;)]\
-(else-if: $title is &quot;Ms.&quot;)[(t_app: &quot;Mommy, when&quot;]\
+(else-if: $title is &quot;Ms.&quot;)[(t_app: &quot;Mommy, when&quot;)]\
 (else:)[(t_app: &quot;When&quot;)]\
 (t_app: &quot; are you getting back home? I&#39;m scared.\n\n&quot;)\
 (t_app: &quot;//Betty, your wife://\n&quot;)\
@@ -600,7 +618,22 @@ Clearly you don&#39;t want that happening.&quot;)]]]\
 ]]\
 (after: 10000)[(if: $call is 0)[(goto: &quot;1 Hall&quot;)]]\
 (event: when $call is &quot;I&#39;ll be home soon, don&#39;t worry about me. Goodbye.&quot;)[(after: 3000)[(goto: &quot;1 Hall&quot;)]]\
-</tw-passagedata><tw-passagedata pid="30" name="End" tags="" position="1800,600" size="100,100">[[This part has not been implemented yet. Get back inside.-&gt;1 Hall]]</tw-passagedata><tw-passagedata pid="31" name="1N Machine Shop" tags="" position="1800,300" size="100,100">(if: not (((history:)&#39;s last is &quot;Inventory&quot;) or ((history:)&#39;s last is &quot;Code&quot;) or ((history:)&#39;s last is &quot;Note with Tasks&quot;) or ((history:)&#39;s last is &quot;Red Bull&quot;) or ((history:)&#39;s last is &quot;Family Picture&quot;)))[(set:$inv_item to &quot;null&quot;)](align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[(if: $inv_item is not &quot;null&quot;)[(print: &quot;Used &quot; + $inv_item + &quot;. &quot;)](print: &quot;Score: &quot; + (str:$score))]&lt;score|(set: _score to $score)(event: when $score &gt; _score)[(rerun: ?score)]\
+</tw-passagedata><tw-passagedata pid="30" name="Disastrous Ending" tags="" position="1700,600" size="100,100">[#The Kincardine Times]\
+=||||=
+(b4r:&quot;solid&quot;)+(b4r-colour:#1df326)+
+(align:&quot;&lt;==&gt;&quot;)+(box:&quot;X&quot;)[\
+###DISASTER AT BRUCE NUCLEAR PLANT
+Late last night at the Bruce Nuclear Generating Station, a disaster occurred. Due to unknown reasons, meltdown occurred in one of the reactors. Due to inaction by the head engineer, this small issue balloon into a crisis. (if: $bool_announcement is true)[An evacuation announcement was issued, and nearly all staff on site made it out safely. ](else:)[No evacuation announcement was issued, and several staff suffered exposure to radiation. ]It has been confirmed that a coolant valve had malfunctioned, (if: $valve_closed is true)[but it was repaired quickly enough to prevent leakage from the building. ](else:)[and a large amount of radiated coolant has seeped into the ground. ](if: $bool_control_rods is true)[The control rods were inserted into the reactor, so significant meltdown was avoided. ](else:)[Control rods were not inserted into the reactor, so runaway meltdown occurred. It is unclear how much damage this will cause. ]In the accident, a coolant pump for the reactor was broken (if: $bool_pump_replaced is true)[but was replaced before heat buildup reached a critical point. ](else:)[so heat was not dissipated from the reactor, making a bad situation much, much worse. ](if: $bool_outflow_close is true)[The outflow valve to the lake was shut off, preventing ecological damage. ](else:)[An outflow valve to the lake was not shut off, releasing unknown amounts of contaminated water into the ecosystem. ]Authorities are instructing the population to avoid the area, stay inside when possible, and drink only tap water.
+]
+=|=
+(b4r:&quot;dashed&quot;)+(b4r-colour:#1df326)+
+(align:&quot;&lt;==&gt;&quot;)+(box:&quot;X&quot;)[\
+####INCOMPETENT ENGINEER: (uppercase: $name)
+According to a first-hand witness, we all have Kincardine resident $name to blame for much of the fallout of the accident at the nuclear plant. Reportedly (if: $title is &quot;Mr.&quot;)[he](else-if: $title is &quot;Ms.&quot;)[she](else:)[they] failed to follow protocol and let a bad situation become a worst-case scenario.
+]
+|==|
+
+(align:&quot;=&gt;&lt;=&quot;)+(box:&quot;X&quot;)[(link: &quot;Return to menu&quot;)[(goto: &quot;Start Page&quot;)]]</tw-passagedata><tw-passagedata pid="31" name="1N Machine Shop" tags="" position="1800,300" size="100,100">(if: not (((history:)&#39;s last is &quot;Inventory&quot;) or ((history:)&#39;s last is &quot;Code&quot;) or ((history:)&#39;s last is &quot;Note with Tasks&quot;) or ((history:)&#39;s last is &quot;Red Bull&quot;) or ((history:)&#39;s last is &quot;Family Picture&quot;)))[(set:$inv_item to &quot;null&quot;)](align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[(if: $inv_item is not &quot;null&quot;)[(print: &quot;Used &quot; + $inv_item + &quot;. &quot;)](print: &quot;Score: &quot; + (str:$score))]&lt;score|(set: _score to $score)(event: when $score &gt; _score)[(rerun: ?score)]\
 (t_clr:)\
 (if: $inv_item is &quot;keycard&quot;)[\
 (if: (not ($inventory contains &quot;replacement pump&quot;)) and ($inventory contains &quot;note with tasks&quot;))[(t_app: &quot;You swipe Kapi&#39;s keycard and the door unlocks.
@@ -703,7 +736,57 @@ You flip the map over.
 As you rush out, a splinter of the table snags your hazmat suit and rips one leg open.
 
 You&#39;re no longer protected from radiation.&quot;)(set: $bool_hazmat to false)(after: 10000)[(event: when (t_done:) is true)[(goto: &quot;4 Hall&quot;)]]]]\
-]</tw-passagedata></tw-storydata>
+]</tw-passagedata><tw-passagedata pid="38" name="Bad Ending" tags="" position="1800,600" size="100,100">[#The Kincardine Times]\
+=||||=
+(b4r:&quot;solid&quot;)+(b4r-colour:#1df326)+
+(align:&quot;&lt;==&gt;&quot;)+(box:&quot;X&quot;)[\
+###ACCIDENT AT BRUCE NUCLEAR PLANT
+Late last night at the Bruce Nuclear Generating Station, an accident occurred. Due to unknown reasons, meltdown occurred in one of the reactors. Due to action by the head engineer, effects were mitigated, but danger still remains. (if: $bool_announcement is true)[An evacuation announcement was issued, and nearly all staff on site made it out safely. ](else:)[No evacuation announcement was issued, and several staff suffered exposure to radiation. ]It has been confirmed that a coolant valve had malfunctioned, (if: $valve_closed is true)[but it was repaired quickly enough to prevent leakage from the building. ](else:)[and a large amount of radiated coolant has seeped into the ground. ](if: $bool_control_rods is true)[The control rods were inserted into the reactor, so significant meltdown was avoided. ](else:)[Control rods were not inserted into the reactor, so runaway meltdown occurred. It is unclear how much damage this will cause. ]In the accident, a coolant pump for the reactor was broken (if: $bool_pump_replaced is true)[but was replaced before heat buildup reached a critical point. ](else:)[so heat was not dissipated from the reactor, making a bad situation much, much worse. ](if: $bool_outflow_close is true)[The outflow valve to the lake was shut off, preventing ecological damage. ](else:)[An outflow valve to the lake was not shut off, releasing unknown amounts of contaminated water into the ecosystem. ]Authorities are instructing the population to avoid the area, stay inside when possible, and drink only tap water.
+]
+=|=
+(b4r:&quot;dashed&quot;)+(b4r-colour:#1df326)+
+(align:&quot;&lt;==&gt;&quot;)+(box:&quot;X&quot;)[\
+(if: $bool_technician_saved)[####(uppercase: $name) SAVES LIFE
+At least one good thing came out of last night&#39;s accident: in a brush with death, Kapi, a technician, was trapped under a fallen shelf and would have drowned in coolant if not for the swift action of (if: $name contains &quot; &quot;)[(string: (split: &quot; &quot;, $name)&#39;s 1st)]\
+(else:)[$name]. &quot;Thanks!&quot; says Kapi.
+]\
+(else:)[####DEATH AT THE STATION:
+To make matters worth, at least one person has been confirmed dead after the accident at the nuclear plant. Kapi, a technician, was trapped beneath a fallen shelf and drowned in radioactive coolant. It was a terrible way to go.
+]]\
+|==|
+
+(align:&quot;=&gt;&lt;=&quot;)+(box:&quot;X&quot;)[(link: &quot;Return to menu&quot;)[(goto: &quot;Start Page&quot;)]]</tw-passagedata><tw-passagedata pid="39" name="Good Ending" tags="" position="1900,600" size="100,100">[#The Kincardine Times]\
+=||||=
+(b4r:&quot;solid&quot;)+(b4r-colour:#1df326)+
+(align:&quot;&lt;==&gt;&quot;)+(box:&quot;X&quot;)[\
+###MISHAP AT BRUCE NUCLEAR PLANT
+Late last night at the Bruce Nuclear Generating Station, a minor operating malfunction occurred. Due to unknown reasons, meltdown occurred in one of the reactors. Thanks to quick action by the head engineer at the plant, crisis was averted. (if: $bool_announcement is true)[An evacuation announcement was issued, and nearly all staff on site made it out safely. ](else:)[No evacuation announcement was issued, and several staff suffered exposure to radiation. ]It has been confirmed that a coolant valve had malfunctioned, (if: $valve_closed is true)[but it was repaired quickly enough to prevent leakage from the building. ](else:)[and a large amount of radiated coolant has seeped into the ground. ](if: $bool_control_rods is true)[The control rods were inserted into the reactor, so significant meltdown was avoided. ](else:)[Control rods were not inserted into the reactor, so runaway meltdown occurred. It is unclear how much damage this will cause. ]In the accident, a coolant pump for the reactor was broken (if: $bool_pump_replaced is true)[but was replaced before heat buildup reached a critical point. ](else:)[so heat was not dissipated from the reactor, making a bad situation much, much worse. ](if: $bool_outflow_close is true)[The outflow valve to the lake was shut off, preventing ecological damage. ](else:)[An outflow valve to the lake was not shut off, releasing unknown amounts of contaminated water into the ecosystem. ]Authorities are instructing the population to avoid the area, but state that there is no need for worry.
+]
+=|=
+(b4r:&quot;dashed&quot;)+(b4r-colour:#1df326)+
+(align:&quot;&lt;==&gt;&quot;)+(box:&quot;X&quot;)[\
+####(if: $name contains &quot; &quot;)[(uppercase: (split: &quot; &quot;, $name)&#39;s last)]\
+(else:)[(uppercase: $name)] HERO OF THE DAY
+According to a first-hand witness, we all have Kincardine resident $name to thank for the quick and effective response to the incident at the plant. (if: $title is &quot;Mr.&quot;)[He](else-if: $title is &quot;Ms.&quot;)[She](else:)[They] acted with intelligence, speed, and bravery and due to keep us all safe today.
+]
+|==|
+
+(align:&quot;=&gt;&lt;=&quot;)+(box:&quot;X&quot;)[(link: &quot;Return to menu&quot;)[(goto: &quot;Start Page&quot;)]]</tw-passagedata><tw-passagedata pid="40" name="Hulk Ending" tags="" position="1800,700" size="100,100">(align:&quot;=&gt;&lt;=&quot;)+(box:&quot;X&quot;)[#The Kincardine Times]\
+=||||=
+(b4r:&quot;solid&quot;)+(b4r-colour:#1df326)+
+(align:&quot;&lt;==&gt;&quot;)+(box:&quot;X&quot;)[\
+###ACCIDENT AT BRUCE NUCLEAR PLANT
+Late last night at the Bruce Nuclear Generating Station, disaster struck. Due to sabotage by an unknown party, meltdown occurred in one of the reactors. (if: $bool_announcement is true)[An evacuation announcement was issued, and nearly all staff on site made it out safely. ](else:)[No evacuation announcement was issued, and several staff suffered exposure to radiation. ]It has been confirmed that a coolant valve had been sabotaged, (if: $valve_closed is true)[but it was repaired quickly enough to prevent leakage from the building. ](else:)[and a large amount of radiated coolant has seeped into the ground. ](if: $bool_control_rods is true)[The control rods were inserted into the reactor, so significant meltdown was avoided. ](else:)[Control rods were not inserted into the reactor, so runaway meltdown occurred. It is unclear how much damage this will cause. ]Due to the sabotage, a coolant pump for the reactor was broken (if: $bool_pump_replaced is true)[but was replaced before heat buildup reached a critical point. ](else:)[so heat was not dissipated from the reactor, making a bad situation much, much worse. ](if: $bool_outflow_close is true)[The outflow valve to the lake was shut off, preventing ecological damage. ](else:)[An outflow valve to the lake was not shut off, releasing unknown amounts of contaminated water into the ecosystem. ]The head engineer of the plant, $title $name, is yet to be found. Authorities are instructing the population to avoid the area and await further guidance.
+]
+=|=
+(b4r:&quot;dashed&quot;)+(b4r-colour:#1df326)+
+(align:&quot;&lt;==&gt;&quot;)+(box:&quot;X&quot;)[\
+####STRANGE GREEN CREATURE SPOTTED BY HIKERS
+This morning on the Holmes Bay trail, two hikers spotted a hulking green creature near the lake. The creature was reported to be around 8 feet tall and very angry. Caution is encouraged until more information is discovered.
+]
+|==|
+
+(align:&quot;=&gt;&lt;=&quot;)+(box:&quot;X&quot;)[(link: &quot;Return to menu&quot;)[(goto: &quot;Start Page&quot;)]]</tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">"use strict";var _slicedToArray=function(){return function(e,t){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return function(e,t){var n=[],r=!0,a=!1,i=void 0;try{for(var o,s=e[Symbol.iterator]();!(r=(o=s.next()).done)&&(n.push(o.value),!t||n.length!==t);r=!0);}catch(e){a=!0,i=e}finally{try{!r&&s.return&&s.return()}finally{if(a)throw i}}return n}(e,t);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e};function _defineProperty(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function _toConsumableArray(e){if(Array.isArray(e)){for(var t=0,n=Array(e.length);t<e.length;t++)n[t]=e[t];return n}return Array.from(e)}!function(){
 /**
  * @license almond 0.3.3 Copyright jQuery Foundation and other contributors.
