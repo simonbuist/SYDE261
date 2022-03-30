@@ -140,7 +140,7 @@ Yan Shuang Zhang 20905741
 Created with Twine 2.0
 https://twinery.org/
 
-Game version 1.0.3&quot;)\
+Game version 1.0.4&quot;)\
 \
 (live:20)[(print:(t_out:))]
 
@@ -406,7 +406,7 @@ Wow, that’s expensive. At least employees are well paid.&quot;)]\
 (link-repeat: &quot;&gt; Make an evacuation announcement&quot;)[(t_app: &quot;\nYour office computer should be able to make the announcement.&quot;)](if: $bool_announcement is true)[ DONE!]
 (link-repeat: &quot;&gt; Close the coolant valve&quot;)[(t_app: &quot;\nThat&#39;s in the pump room! It&#39;s on the 3rd floor&quot;)](if: ($bool_technician_saved is true) and ($bool_save_technician is false))[ FAILED (you decided it was more important to save Kapi)](else-if: $bool_valve_closed is true)[ DONE!]
 (link-repeat: &quot;&gt; Insert the control rods&quot;)[(t_app: &quot;\nYou know that there&#39;s a button for that in the control room.&quot;)](if: $bool_control_rods is true)[&quot; DONE!&quot;]
-(link-repeat: &quot;&gt; Replace the coolant pump&quot;)[(t_app: &quot;\nThe broken one is in the reactor.&quot;)](if: $bool_pump_replaced is true)[&quot; DONE!&quot;]
+(link-repeat: &quot;&gt; Replace the coolant pump&quot;)[(t_app: &quot;\nThe broken one is in the reactor.&quot;)](if: $bool_pump_replaced is true)[DONE!]
 (link-repeat: &quot;&gt; Shut off the outflow&quot;)[(t_app: &quot;\nThat&#39;s on the ground floor. You can probably save that one for last.&quot;)](if: $bool_outflow_closed is true)[&quot; DONE!&quot;]
 (live:20)[(print:(t_out:))]
 
@@ -742,7 +742,7 @@ You flip the map over.
 As you rush out, a splinter of the table snags your hazmat suit and rips one leg open.
 
 ##You&#39;re no longer protected from radiation.&quot;)(set: $bool_hazmat to false)(event: when (t_done:) is true)[\
-(live:2s)[(set: $delay to it - 1)(if: $delay is 0)[(goto: &quot;4 Hall&quot;)]]]]]</tw-passagedata><tw-passagedata pid="38" name="Bad Ending" tags="" position="1800,600" size="100,100">[#The Kincardine Times]\
+(live:2s)[(set: $delay to it - 1)(if: $delay is 0)[(goto: &quot;4 Hall&quot;)]]]]]]</tw-passagedata><tw-passagedata pid="38" name="Bad Ending" tags="" position="1800,600" size="100,100">[#The Kincardine Times]\
 =||||=
 (b4r:&quot;solid&quot;)+(b4r-colour:#1df326)+
 (align:&quot;&lt;==&gt;&quot;)+(box:&quot;X&quot;)[\
