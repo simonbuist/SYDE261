@@ -140,7 +140,7 @@ Yan Shuang Zhang 20905741
 Created with Twine 2.0
 https://twinery.org/
 
-Game version 1.0.0&quot;)\
+Game version 1.0.1&quot;)\
 \
 (live:20)[(print:(t_out:))]
 
@@ -245,6 +245,8 @@ You feel a little more safe now.&quot;)]]\
 ]</tw-passagedata><tw-passagedata pid="7" name="4W Lookout Room" tags="" position="500,400" size="100,100">(if: not (((history:)&#39;s last is &quot;Inventory&quot;) or ((history:)&#39;s last is &quot;Code&quot;) or ((history:)&#39;s last is &quot;Note with Tasks&quot;) or ((history:)&#39;s last is &quot;Red Bull&quot;) or ((history:)&#39;s last is &quot;Family Picture&quot;)))[(set:$inv_item to &quot;null&quot;)](align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[(if: $inv_item is not &quot;null&quot;)[(print: &quot;Used &quot; + $inv_item + &quot;. &quot;)](print: &quot;Score: &quot; + (str:$score))]&lt;score|(set: _score to $score)(event: when $score &gt; _score)[(rerun: ?score)]\
 (t_clr:)\
 (t_app: &quot;The glistening moonlight fades as raindrops start to race down the window. Looking outside reveals the night at its darkest in Kincardine. There is a vending machine by the entrance.&quot;)\
+(if: $inv_item is &quot;hatchet&quot;)[(t_app: &quot;\n You want your red bull, and nothing&#39;s going to get in the way.
+You hack open the front of the vending machine and grab your drink.&quot;)(set: $bool_broken_vending to true)(set: $inventory to it + (a: &quot;red bull&quot;))]
 &lt;p&gt;&lt;pre&gt;                                                    @%(*,,,,,,****/.                                
                                                     &amp;(**,,,,,,,**,.                                 
                                                    @%*,,,,,,,,,,,,                                  
@@ -572,6 +574,8 @@ Clearly you don&#39;t want that happening.&quot;)]]]\
 </tw-passagedata><tw-passagedata pid="27" name="Exit Confirmation" tags="" position="1800,500" size="100,100">(if: not (((history:)&#39;s last is &quot;Inventory&quot;) or ((history:)&#39;s last is &quot;Code&quot;) or ((history:)&#39;s last is &quot;Note with Tasks&quot;) or ((history:)&#39;s last is &quot;Red Bull&quot;) or ((history:)&#39;s last is &quot;Family Picture&quot;)))[(set:$inv_item to &quot;null&quot;)](align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[(if: $inv_item is not &quot;null&quot;)[(print: &quot;Used &quot; + $inv_item + &quot;. &quot;)](print: &quot;Score: &quot; + (str:$score))]&lt;score|(set: _score to $score)(event: when $score &gt; _score)[(rerun: ?score)]\
 (t_clr:)\
 (t_app: &quot;A faint beam of guiding moonlight passes through the slits on the door. The exit lies just in front of you.&quot;)\
+(if: $bool_hazmat is false)[(t_app: &quot;Your leg with the torn suit is hurting quite a lot. You look down and see it&#39;s turned green.
+Whatever, there&#39;s bigger things to worry about right now.&quot;)]\
 (if: not (($bool_announcement is true) and (($bool_valve_closed is true) or (($bool_technician_saved is true) and ($bool_save_technician is false))) and ($bool_control_rods is true) and ($bool_pump_replaced is true) and ($bool_outflow_closed)))[(t_app: &quot;\n\nYou still have some tasks unfinished. Are you sure you want to leave?&quot;)]\
 (live:20)[(print:(t_out:))]
 
@@ -735,7 +739,7 @@ You flip the map over.
 
 As you rush out, a splinter of the table snags your hazmat suit and rips one leg open.
 
-You&#39;re no longer protected from radiation.&quot;)(set: $bool_hazmat to false)(after: 10000)[(event: when (t_done:) is true)[(goto: &quot;4 Hall&quot;)]]]]\
+##You&#39;re no longer protected from radiation.&quot;)(set: $bool_hazmat to false)(after: 14000)[(event: when (t_done:) is true)[(goto: &quot;4 Hall&quot;)]]]]\
 ]</tw-passagedata><tw-passagedata pid="38" name="Bad Ending" tags="" position="1800,600" size="100,100">[#The Kincardine Times]\
 =||||=
 (b4r:&quot;solid&quot;)+(b4r-colour:#1df326)+
