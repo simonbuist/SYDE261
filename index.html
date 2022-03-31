@@ -140,7 +140,7 @@ Yan Shuang Zhang 20905741
 Created with Twine 2.0
 https://twinery.org/
 
-Game version 1.0.6&quot;)\
+Game version 1.0.7&quot;)\
 \
 (live:20)[(print:(t_out:))]
 
@@ -303,7 +303,7 @@ You hack open the front of the vending machine and grab your drink.&quot;)(set: 
 
 (align:&quot;==&gt;&quot;)+(box:&quot;=XXXX&quot;)[\
 (link: &quot;Inventory&quot;)[(goto: &quot;Inventory&quot;)]
-(link: &quot;Buy a drink&quot;)\[(if: $bool_broken_vending is true)[(t_app: &quot;\nYou&#39;ve hacked this machine to pieces. You&#39;re not even sure where to put your money.&quot;)]\(if: $inventory contains &quot;toonie&quot;)[(set: $inventory to it - (a: &quot;toonie&quot;))(set: $inventory to it + (a: &quot;red bull&quot;))(set: $bool_key_on_ground to true)(t_app: &quot;\nYou put the toonie in the vending machine and buy your favourite drink - a nice cold red bull.
+(link: &quot;Buy a drink&quot;)[(if: $bool_broken_vending is true)[(t_app: &quot;\nYou&#39;ve hacked this machine to pieces. You&#39;re not even sure where to put your money.&quot;)]\(if: $inventory contains &quot;toonie&quot;)[(set: $inventory to it - (a: &quot;toonie&quot;))(set: $inventory to it + (a: &quot;red bull&quot;))(set: $bool_key_on_ground to true)(t_app: &quot;\nYou put the toonie in the vending machine and buy your favourite drink - a nice cold red bull.
 As you take it out, you fumble it and it rolls under the machine. While leaning down to grab it, you notice a key under the vending machine. How odd!&quot;)]\
 (else:)[(t_app: &quot;\nYou have no cash on you!&quot;)]]
 (event: when $bool_key_on_ground is true)[(link: &quot;Pick up the key\n&quot;)[(set: $bool_key_on_ground to false)(set: $inventory to it + (a: &quot;key&quot;))(t_app: &quot;\nYou reach under the machine and grab the key. It&#39;s a little sticky. Ew.&quot;)]]\
